@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.Component;
 
 public class GUI extends JFrame{
 	private JTextField textFieldSeed;
