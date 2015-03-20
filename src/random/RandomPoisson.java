@@ -7,7 +7,7 @@ public class RandomPoisson {
 	private double[] rand;
 	private double exp;
 		
-	public RandomPoisson(double lambda, int size) {
+	public RandomPoisson(double seed, double lambda, int size) {
 		super();
 		this.random(35, 16807, 0, 2147483647, size);
 		this.num = new Vector<Integer>();
