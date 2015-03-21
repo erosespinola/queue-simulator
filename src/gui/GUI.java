@@ -9,8 +9,6 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
-
-import random.RandomPoisson;
 import simulator.Simulator;
 
 import java.awt.event.ActionListener;
@@ -26,20 +24,21 @@ public class GUI extends JFrame implements ActionListener {
 	private JTextField textFieldLambda;
 	private JTextField textFieldMiu;
 	private JTextField textFieldTime;
-	private Vector<Integer> random;
 	
 	public GUI() {
 		setItems();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		getContentPane().setLayout(null);
 		setResizable(false);
-		setTitle("Queue Simulator");
+		setTitle("Simulador de Cola M/M/1");
 		setSize(new Dimension(600, 400));
 		setVisible(true);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+
+    // 
 		if(arg0.getActionCommand().equals("Simulate")) {
 			int time = 0;
 			double lambda = 0, seed = 0, miu = 0;
@@ -52,17 +51,12 @@ public class GUI extends JFrame implements ActionListener {
 				lambda = Double.parseDouble(this.textFieldLambda.getText());
 				miu = Double.parseDouble(this.textFieldMiu.getText());
 				time = Integer.parseInt(this.textFieldTime.getText());
-				
-				this.random = new RandomPoisson(seed, lambda, time).getNumbers();
-				
-				int i = 0;
-				while (i < this.random.size()){
-					// Arroja todos los valores al mismo tiempo, revisar clase Simulator
-				    Timer timer = new Timer();
-				    timer.schedule(new Simulator( i ), 3000);
-				    i++;
-				}
-				
+
+        Simulator simulator = new Simulator(lambda, miu, seed);
+        // advance simulator for given time units
+        while(time-- >= 0) {
+          simulator.Advance();
+        }
 				return;
 			}
 			JOptionPane.showMessageDialog(null, "Fill out all the fields with numeric values");
