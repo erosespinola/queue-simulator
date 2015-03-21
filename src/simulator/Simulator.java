@@ -12,12 +12,12 @@ public class Simulator {
 	private double lambda;
 	private double miu;
 	private int id = 0;
-	
+
 	public Simulator(double lambda, double miu, double seed) {
 		this.clients = new ArrayList<Client>();
 		this.lambda = lambda;
 		this.miu = miu;
-		this.random = new Random(seed, 0, 10);
+		this.random = new Random(seed, 0, 5);
 	}
 
 	/**
@@ -35,13 +35,14 @@ public class Simulator {
 		// if on next entry time, push a new client to the line
 		if (time == nextEntryEvent) {
 
-			Client newClient = new Client(time, this.random.next(this.lambda), this.random.next(this.miu), "Client " + (++id));
+			Client newClient = new Client(time, this.random.next(this.lambda),
+					this.random.next(this.miu), "Client " + (++id));
 			newClient.enter();
 
 			// if first in line, serve that client
 			if (clients.isEmpty()) {
 				newClient.serve();
-				nextExitEvent = newClient.exitTime;
+				nextExitEvent = newClient.getExitTime();
 			}
 
 			clients.add(newClient);
@@ -57,7 +58,7 @@ public class Simulator {
 			if (!clients.isEmpty()) {
 				Client nextClient = clients.get(0);
 				nextClient.serve();
-				nextExitEvent = nextClient.exitTime;
+				nextExitEvent = nextClient.getExitTime();
 			} else {
 				nextExitEvent = -1;
 			}
@@ -67,13 +68,29 @@ public class Simulator {
 		// determine next entry time
 		if (!clients.isEmpty()) {
 			Client topClient = clients.get(clients.size() - 1);
-			nextEntryEvent = topClient.nextEntry;
+			nextEntryEvent = topClient.getNextEntry();
 		}
 
 		time++;
 
 		System.out.println("");
 
+	}
+
+	public double L() {
+		double waitingTime = 0;
+		for (int i = 0; i < this.clients.size(); i++) {
+			waitingTime += this.clients.get(i).getSystemTime();
+		}
+		return waitingTime/this.time;
+	}
+	
+	public double Lq() {
+		double waitingTime = 0;
+		for (int i = 0; i < this.clients.size(); i++) {
+			waitingTime += this.clients.get(i).getWaitTime();
+		}
+		return waitingTime/this.time;
 	}
 
 	/**
