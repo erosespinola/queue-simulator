@@ -38,7 +38,6 @@ public class GUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
-    // 
 		if(arg0.getActionCommand().equals("Simulate")) {
 			int time = 0;
 			double lambda = 0, seed = 0, miu = 0;
@@ -47,10 +46,18 @@ public class GUI extends JFrame implements ActionListener {
 					&& !this.textFieldSeed.getText().isEmpty() && isNumeric(this.textFieldSeed.getText())
 					&& !this.textFieldSeed.getText().isEmpty() && isNumeric(this.textFieldSeed.getText())) {
 				
-				seed = Double.parseDouble(this.textFieldSeed.getText());
-				lambda = Double.parseDouble(this.textFieldLambda.getText());
-				miu = Double.parseDouble(this.textFieldMiu.getText());
-				time = Integer.parseInt(this.textFieldTime.getText());
+				try {
+					seed = Double.parseDouble(this.textFieldSeed.getText());
+					lambda = Double.parseDouble(this.textFieldLambda.getText());
+					miu = Double.parseDouble(this.textFieldMiu.getText());
+					time = Integer.parseInt(this.textFieldTime.getText());
+				} 
+				catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Números incorrectos");
+					time = -1;
+					e.printStackTrace();
+				}
+				
 
         Simulator simulator = new Simulator(lambda, miu, seed);
         // advance simulator for given time units
