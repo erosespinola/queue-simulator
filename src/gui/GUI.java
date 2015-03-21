@@ -51,6 +51,10 @@ public class GUI extends JFrame implements ActionListener {
 					lambda = Double.parseDouble(this.textFieldLambda.getText());
 					miu = Double.parseDouble(this.textFieldMiu.getText());
 					time = Integer.parseInt(this.textFieldTime.getText());
+					
+					if(miu<lambda){
+						throw new NumberFormatException();
+					}
 				} 
 				catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Números incorrectos");
