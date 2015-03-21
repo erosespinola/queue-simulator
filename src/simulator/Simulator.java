@@ -12,11 +12,7 @@ public class Simulator {
 	private double lambda;
 	private double miu;
 	private int id = 0;
-
-	int i = 0;
-	int max = 10;
-	int exitTimes[] = { 7, 2, 3, 9, 6, 3, 1, 4, 5, 5 };
-
+	
 	public Simulator(double lambda, double miu, double seed) {
 		this.clients = new ArrayList<Client>();
 		this.lambda = lambda;
@@ -37,7 +33,7 @@ public class Simulator {
 		System.out.println(" Siguiente Salida: " + nextExitEvent);
 
 		// if on next entry time, push a new client to the line
-		if (i < max && time == nextEntryEvent) {
+		if (time == nextEntryEvent) {
 
 			Client newClient = new Client(time, this.random.next(this.lambda), this.random.next(this.miu), "Client " + (++id));
 			newClient.enter();

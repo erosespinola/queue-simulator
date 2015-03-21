@@ -87,7 +87,7 @@ public class GUI extends JFrame implements ActionListener {
 		getContentPane().add(lblLambda);
 		
 		textFieldLambda = new JTextField();
-		textFieldLambda.setText("0.2");
+		textFieldLambda.setText("10");
 		textFieldLambda.setToolTipText("Set lambda");
 		textFieldLambda.setBounds(25, 36, 118, 20);
 		getContentPane().add(textFieldLambda);
@@ -98,7 +98,7 @@ public class GUI extends JFrame implements ActionListener {
 		getContentPane().add(lblMiu);
 		
 		textFieldMiu = new JTextField();
-		textFieldMiu.setText("0");
+		textFieldMiu.setText("15");
 		textFieldMiu.setToolTipText("Set miu");
 		textFieldMiu.setBounds(25, 61, 118, 20);
 		getContentPane().add(textFieldMiu);
