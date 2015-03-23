@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import simulator.Simulator;
+import javax.swing.SwingConstants;
 
 /**
  * Clase de GUI
@@ -25,6 +26,7 @@ public class GUI extends JFrame implements ActionListener {
 	private JTextField textFieldTime;
 	
 	private JLabel lblW, lblWq, lblL, lblLq, lblO;
+	private JLabel lblCreadoPorEros;
 	
 	/**
 	 * Constructor de la clase
@@ -167,24 +169,29 @@ public class GUI extends JFrame implements ActionListener {
 		panelResults.setLayout(null);
 		
 		this.lblW = new JLabel("W = ");
-		lblW.setBounds(10, 11, 197, 14);
+		lblW.setBounds(10, 11, 416, 14);
 		panelResults.add(lblW);
 		
 		this.lblWq = new JLabel("Wq = ");
-		lblWq.setBounds(10, 36, 197, 14);
+		lblWq.setBounds(10, 36, 416, 14);
 		panelResults.add(lblWq);
 		
 		this.lblL = new JLabel("L = ");
-		lblL.setBounds(10, 61, 197, 14);
+		lblL.setBounds(10, 61, 416, 14);
 		panelResults.add(lblL);
 		
 		this.lblLq = new JLabel("Lq = ");
-		lblLq.setBounds(10, 86, 197, 14);
+		lblLq.setBounds(10, 86, 416, 14);
 		panelResults.add(lblLq);
 		
 		this.lblO = new JLabel("O = ");
-		lblO.setBounds(10, 111, 197, 14);
+		lblO.setBounds(10, 111, 416, 14);
 		panelResults.add(lblO);
+		
+		lblCreadoPorEros = new JLabel("Creado por Antonio, Eros, Diego y Pablo");
+		lblCreadoPorEros.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCreadoPorEros.setBounds(10, 324, 416, 14);
+		panelResults.add(lblCreadoPorEros);
 
 		btnSimulate.addActionListener(this);
 		this.repaint();

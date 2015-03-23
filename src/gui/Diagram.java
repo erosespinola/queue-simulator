@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
+
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import simulator.Client;
 
 /**
@@ -17,7 +21,7 @@ public class Diagram extends JFrame {
 	private ArrayList<Client> clients;
 	private int lineSizeX;
 	private int xStart, yStart, lineDistance;
-	
+
 	/**
 	 * Función que inicializa los elementos del diagrama
 	 * 
@@ -26,18 +30,30 @@ public class Diagram extends JFrame {
 	 */
 	public Diagram(int time, ArrayList<Client> clients) {
 		super();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setName("Simulador de Cola M/M/1 Diagrama");
-		this.getContentPane().setBackground(Color.WHITE);
-		setSize(new Dimension(1200, 500));
-		setVisible(true);
-		this.setResizable(true);
 		this.time = time;
-		this.lineSizeX = this.getWidth() - 200;
 		this.xStart = 100;
 		this.yStart = 100;
+		this.lineSizeX = (time * 20) + this.xStart;
 		this.clients = clients;
 		this.lineDistance = 200;
+		this.setBackground(Color.WHITE);
+		
+		
+        JFrame frame = new JFrame();
+        this.setPreferredSize(new Dimension(this.lineSizeX * 2, 500));
+        JScrollPane scrollPane = new JScrollPane(this);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        scrollPane.setBounds(0,0,this.lineSizeX,500);
+        JPanel contentPane = new JPanel(null);
+        contentPane.setPreferredSize(new Dimension(this.lineSizeX, 500));
+        contentPane.add(scrollPane);
+        frame.setContentPane(contentPane);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setVisible(true);
+		
+		
 	}
 	
 	/**
@@ -81,7 +97,7 @@ public class Diagram extends JFrame {
 	 * Método que dibuja los valores de entrada a la simulación de un cliente
 	 * 
 	 * @param g Instancia de Graphics para dibujar
-	 * @param client Representa el cliente de donde obtener su información
+	 * @param client Representa el cliente de donde obtener su informaciÃ³n
 	 */
 	public void drawClientEntered(Graphics g,Client client){
 		int x = (client.getArriveTime()) * (this.lineSizeX / this.time) + this.xStart;
@@ -96,7 +112,7 @@ public class Diagram extends JFrame {
 	 * Método que dibuja los valores de entrada a el servicio de un cliente
 	 * 
 	 * @param g Instancia de Graphics para dibujar
-	 * @param client Representa el cliente de donde obtener su información
+	 * @param client Representa el cliente de donde obtener su informaciÃ³n
 	 */
 	public void drawClientEnteredService(Graphics g,Client client){
 		int x = (client.getWaitTime() + client.getArriveTime()) * (this.lineSizeX / this.time)  + this.xStart;
@@ -112,7 +128,7 @@ public class Diagram extends JFrame {
 	 * Método que dibuja los valores de salida del servicio de un cliente
 	 * 
 	 * @param g Instancia de Graphics para dibujar
-	 * @param client Representa el cliente de donde obtener su información
+	 * @param client Representa el cliente de donde obtener su informaciÃ³n
 	 */
 	public void drawClientServed(Graphics g,Client client){
 		int x = (client.getExitTime()) * (this.lineSizeX / this.time) + this.xStart;
@@ -154,11 +170,12 @@ public class Diagram extends JFrame {
 		if (this.time != 0) {
 			this.drawTimeScale(g);
 			
-			for (Client client : this.clients) {
-				this.drawClientEntered(g, client);
-				this.drawClientEnteredService(g, client);
-				this.drawClientServed(g, client);
+			for (int i = 0; i < this.clients.size() - 1; i++) {
+				this.drawClientEntered(g, this.clients.get(i));
+				this.drawClientEnteredService(g, this.clients.get(i));
+				this.drawClientServed(g, this.clients.get(i));
 			}
+
 		}
 	}
 }
