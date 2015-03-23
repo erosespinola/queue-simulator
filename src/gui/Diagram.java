@@ -3,6 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -31,29 +33,27 @@ public class Diagram extends JFrame {
 	public Diagram(int time, ArrayList<Client> clients) {
 		super();
 		this.time = time;
+		this.clients = clients;
 		this.xStart = 100;
 		this.yStart = 100;
-		this.lineSizeX = (time * 20) + this.xStart;
-		this.clients = clients;
+		this.lineSizeX = (int)((this.getFormatedTime(time)) + this.xStart);
 		this.lineDistance = 200;
 		this.setBackground(Color.WHITE);
 		
-		
+		//Confiuración del Frame que contiene el Panel donde se pinta el gráfico
         JFrame frame = new JFrame();
-        this.setPreferredSize(new Dimension(this.lineSizeX * 2, 500));
+        this.setPreferredSize(new Dimension((int)this.lineSizeX * 2, 500));
         JScrollPane scrollPane = new JScrollPane(this);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(0,0,this.lineSizeX,500);
+        scrollPane.setBounds(0,0,(int)this.lineSizeX,500);
         JPanel contentPane = new JPanel(null);
-        contentPane.setPreferredSize(new Dimension(this.lineSizeX, 500));
+        contentPane.setPreferredSize(new Dimension((int)this.lineSizeX, 500));
         contentPane.add(scrollPane);
         frame.setContentPane(contentPane);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setVisible(true);
-		
-		
+        frame.setVisible(true);	
 	}
 	
 	/**
@@ -91,6 +91,26 @@ public class Diagram extends JFrame {
 	public void setClients(ArrayList<Client> clients) {
 		this.clients = clients;
 	}
+	
+	/**
+	 * Formatea el tiempo para la escala necesaria de acuerdo al total de tiempo y de clientes
+	 * 
+	 * @param time Tiempo a formatear
+	 */
+	public double getFormatedTime(double time) {
+		if (time < 1) {
+			return time = time * this.getClients().size() * 100;
+		}
+		else if (time > 0 && time < 10) {
+			return time = time * this.getClients().size() * 10;
+		}
+		else if (time > 10 && time < 100) {
+			return time = time * this.getClients().size();
+		}
+		else{
+			return time = time * this.getClients().size() / 2;
+		}
+	}
 
 
 	/**
@@ -100,12 +120,13 @@ public class Diagram extends JFrame {
 	 * @param client Representa el cliente de donde obtener su informaciÃ³n
 	 */
 	public void drawClientEntered(Graphics g,Client client){
-		// int x = (client.getArriveTime()) * (this.lineSizeX / this.time) + this.xStart;
-		// g.drawString(client.getLabel(), x, this.yStart - 40 );
-		// g.drawLine(x,this.yStart - 30, x, this.yStart);
-		// int[] xTriangle = {x, x - 5, x + 5};
-		// int[] yTriangle = {this.yStart, this.yStart - 5, this.yStart - 5};
-		// g.drawPolygon(xTriangle, yTriangle, 3);
+		Graphics2D g2 = (Graphics2D)g;
+		double x = (client.getArriveTime()) * (this.lineSizeX / this.time) + this.xStart;
+		g2.drawString(client.getLabel(), (int)x, (int)this.yStart - 40 );
+		g2.draw(new Line2D.Double(x,this.yStart - 30, x, this.yStart));
+		int[] xTriangle = {(int)x, (int)x - 5, (int)x + 5};
+		int[] yTriangle = {(int)this.yStart, (int)this.yStart - 5, (int)this.yStart - 5};
+		g.drawPolygon(xTriangle, yTriangle, 3);
 	}
 	
 	/**
@@ -115,13 +136,14 @@ public class Diagram extends JFrame {
 	 * @param client Representa el cliente de donde obtener su informaciÃ³n
 	 */
 	public void drawClientEnteredService(Graphics g,Client client){
-		// int x = (client.getWaitTime() + client.getArriveTime()) * (this.lineSizeX / this.time)  + this.xStart;
-		// int xIni = (client.getArriveTime()) * (this.lineSizeX / this.time)  + this.xStart;
-		// g.drawLine(xIni,this.yStart, x, this.yStart + this.lineDistance);
-		// int y = this.yStart + this.lineDistance;
-		// int[] xTriangle = {x, x - 5, x + 5};
-		// int[] yTriangle = {y, y - 5, y - 5};
-		// g.drawPolygon(xTriangle, yTriangle, 3);
+		Graphics2D g2 = (Graphics2D)g;
+		double x = (client.getWaitTime() + client.getArriveTime()) * (this.lineSizeX / this.time)  + this.xStart;
+		double xIni = (client.getArriveTime()) * (this.lineSizeX / this.time)  + this.xStart;
+		g2.draw(new Line2D.Double(xIni,this.yStart, x, this.yStart + this.lineDistance));
+		double y = this.yStart + this.lineDistance;
+		int[] xTriangle = {(int)x, (int)x - 5, (int)x + 5};
+		int[] yTriangle = {(int)y, (int)y - 5, (int)y - 5};
+		g.drawPolygon(xTriangle, yTriangle, 3);
 	}
 	
 	/**
@@ -131,13 +153,14 @@ public class Diagram extends JFrame {
 	 * @param client Representa el cliente de donde obtener su informaciÃ³n
 	 */
 	public void drawClientServed(Graphics g,Client client){
-		// int x = (client.getExitTime()) * (this.lineSizeX / this.time) + this.xStart;
-		// g.drawString(client.getLabel(), x, this.yStart + this.lineDistance + 20 );
-		// g.drawLine(x,this.yStart + this.lineDistance, x, this.yStart + this.lineDistance + 50);
-		// int y = this.yStart + this.lineDistance + 50;
-		// int[] xTriangle = {x, x - 5, x + 5};
-		// int[] yTriangle = {y, y - 5, y - 5};
-		// g.drawPolygon(xTriangle, yTriangle, 3);
+		Graphics2D g2 = (Graphics2D)g;
+		double x = (client.getExitTime()) * (this.lineSizeX / this.time) + this.xStart;
+		g2.drawString(client.getLabel(), (int)x, (int)(this.yStart + this.lineDistance + 20) );
+		g2.draw(new Line2D.Double(x,this.yStart + this.lineDistance, x, this.yStart + this.lineDistance + 50));
+		double y = this.yStart + this.lineDistance + 50;
+		int[] xTriangle = {(int)x, (int)x - 5, (int)x + 5};
+		int[] yTriangle = {(int)y, (int)y - 5, (int)y - 5};
+		g.drawPolygon(xTriangle, yTriangle, 3);
 	}
 	
 	/**
@@ -146,19 +169,23 @@ public class Diagram extends JFrame {
 	 * @param g Instancia de Graphics para dibujar
 	 */
 	public void drawTimeScale(Graphics g){
-		// if (this.time != 0) {
-		// 	 g.drawLine(this.xStart, this.yStart, this.lineSizeX + this.xStart, this.yStart);
-		// 	 g.drawLine(this.xStart, this.yStart + this.lineDistance, this.lineSizeX + this.xStart,  this.yStart + this.lineDistance);
-		// 	 int scale = this.lineSizeX / this.getTime();
-		// 	 for (int i = 0; i <= this.getTime(); i++) {
-		// 		 int x =this.xStart +(i * scale);
-		// 		g.drawLine(x, this.yStart - 10, x,  this.yStart + 10);
-		// 		if (i % 2 == 0) {
-		// 			g.drawString(""+i, x, this.yStart + 20);
-		// 		}
+		Graphics2D g2 = (Graphics2D)g;
+		if (this.time != 0) {
+
+			g2.draw(new Line2D.Double(this.xStart, this.yStart, this.lineSizeX + this.xStart, this.yStart));
+			g2.draw(new Line2D.Double(this.xStart, this.yStart + this.lineDistance, this.lineSizeX + this.xStart,  this.yStart + this.lineDistance));
+			double scale = this.lineSizeX / this.getTime();
+			
+			for (int i = 0; i <= this.getTime(); i++) {
+				 double x =this.xStart +(i * scale);
+				g2.draw( new Line2D.Double(x, this.yStart - 10, x,  this.yStart + 10));
+				if (i % 1 == 0) {
+					g2.drawString("T"+i,(int) x, (int)this.yStart + 20);
+				}
 				
-		// 	}
-		// }
+			}
+			
+		}
 	}
 	
 	/**
@@ -167,13 +194,14 @@ public class Diagram extends JFrame {
 	 * @param g Instancia de Graphics para dibujar
 	 */
 	public void paint (Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
 		if (this.time != 0) {
 			this.drawTimeScale(g);
 			
 			for (int i = 0; i < this.clients.size() - 1; i++) {
-				this.drawClientEntered(g, this.clients.get(i));
-				this.drawClientEnteredService(g, this.clients.get(i));
-				this.drawClientServed(g, this.clients.get(i));
+				this.drawClientEntered(g2, this.clients.get(i));
+				this.drawClientEnteredService(g2, this.clients.get(i));
+				this.drawClientServed(g2, this.clients.get(i));
 			}
 
 		}
