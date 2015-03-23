@@ -52,8 +52,8 @@ public class GUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand().equals("Simulate")) {
-			int time = 0;
-			int totalTime = 0;
+			double time = 0;
+			// int totalTime = 0;
 			double lambda = 0, seed = 0, miu = 0;
 			
 			// Validación de los campos
@@ -69,34 +69,34 @@ public class GUI extends JFrame implements ActionListener {
 				seed = Double.parseDouble(this.textFieldSeed.getText());
 				lambda = Double.parseDouble(this.textFieldLambda.getText());
 				miu = Double.parseDouble(this.textFieldMiu.getText());
-				time = Integer.parseInt(this.textFieldTime.getText());
-				totalTime = time;
+				time = Double.parseDouble(this.textFieldTime.getText());
+				// totalTime = time;
 				
 				if (miu < lambda) {
 					JOptionPane.showMessageDialog(null, "Números inválidos");
 					return;
 				}
 
-				Simulator simulator = new Simulator(lambda, miu, seed);
+				Simulator simulator = new Simulator(lambda, miu, seed, time);
 				
 				// Avanza el simuladar en unidades de tiempo dadas
-				while (time-- >= 0) {
-					simulator.Advance();
-				}
+        boolean canAdvance = true;
+        while(canAdvance) {
+          canAdvance = simulator.Advance();
+        }
 
 				//Impresión de resultados en panel
-				
-				this.lblL.setText(this.lblL.getText() + simulator.L());
-				this.lblLq.setText(this.lblLq.getText() + simulator.Lq());
-				this.lblW.setText(this.lblW.getText() + simulator.W());
-				this.lblWq.setText(this.lblWq.getText() + simulator.Wq());
-				this.lblO.setText(this.lblO.getText() + simulator.O());
+				this.lblL.setText("L = " + simulator.L());
+				this.lblLq.setText("Lq = " + simulator.Lq());
+				this.lblW.setText("W = " + simulator.W());
+				this.lblWq.setText("Wq = " + simulator.Wq());
+				this.lblO.setText("O = " + simulator.O());
 
 		        // Creación del diagrama de simulación
-				if (!simulator.getClients().isEmpty()  && totalTime > 0) {
-					Diagram di = new Diagram(totalTime, simulator.getClients());
-					di.repaint();
-				}
+				// if (!simulator.getClients().isEmpty()  && totalTime > 0) {
+				// 	Diagram di = new Diagram(totalTime, simulator.getClients());
+				// 	di.repaint();
+				// }
 				
 				return;
 			}
