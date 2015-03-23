@@ -100,12 +100,12 @@ public class Diagram extends JFrame {
 	 * @param client Representa el cliente de donde obtener su información
 	 */
 	public void drawClientEntered(Graphics g,Client client){
-		int x = (client.getArriveTime()) * (this.lineSizeX / this.time) + this.xStart;
-		g.drawString(client.getLabel(), x, this.yStart - 40 );
-		g.drawLine(x,this.yStart - 30, x, this.yStart);
-		int[] xTriangle = {x, x - 5, x + 5};
-		int[] yTriangle = {this.yStart, this.yStart - 5, this.yStart - 5};
-		g.drawPolygon(xTriangle, yTriangle, 3);
+		// int x = (client.getArriveTime()) * (this.lineSizeX / this.time) + this.xStart;
+		// g.drawString(client.getLabel(), x, this.yStart - 40 );
+		// g.drawLine(x,this.yStart - 30, x, this.yStart);
+		// int[] xTriangle = {x, x - 5, x + 5};
+		// int[] yTriangle = {this.yStart, this.yStart - 5, this.yStart - 5};
+		// g.drawPolygon(xTriangle, yTriangle, 3);
 	}
 	
 	/**
@@ -115,13 +115,13 @@ public class Diagram extends JFrame {
 	 * @param client Representa el cliente de donde obtener su información
 	 */
 	public void drawClientEnteredService(Graphics g,Client client){
-		int x = (client.getWaitTime() + client.getArriveTime()) * (this.lineSizeX / this.time)  + this.xStart;
-		int xIni = (client.getArriveTime()) * (this.lineSizeX / this.time)  + this.xStart;
-		g.drawLine(xIni,this.yStart, x, this.yStart + this.lineDistance);
-		int y = this.yStart + this.lineDistance;
-		int[] xTriangle = {x, x - 5, x + 5};
-		int[] yTriangle = {y, y - 5, y - 5};
-		g.drawPolygon(xTriangle, yTriangle, 3);
+		// int x = (client.getWaitTime() + client.getArriveTime()) * (this.lineSizeX / this.time)  + this.xStart;
+		// int xIni = (client.getArriveTime()) * (this.lineSizeX / this.time)  + this.xStart;
+		// g.drawLine(xIni,this.yStart, x, this.yStart + this.lineDistance);
+		// int y = this.yStart + this.lineDistance;
+		// int[] xTriangle = {x, x - 5, x + 5};
+		// int[] yTriangle = {y, y - 5, y - 5};
+		// g.drawPolygon(xTriangle, yTriangle, 3);
 	}
 	
 	/**
@@ -131,13 +131,13 @@ public class Diagram extends JFrame {
 	 * @param client Representa el cliente de donde obtener su información
 	 */
 	public void drawClientServed(Graphics g,Client client){
-		int x = (client.getExitTime()) * (this.lineSizeX / this.time) + this.xStart;
-		g.drawString(client.getLabel(), x, this.yStart + this.lineDistance + 20 );
-		g.drawLine(x,this.yStart + this.lineDistance, x, this.yStart + this.lineDistance + 50);
-		int y = this.yStart + this.lineDistance + 50;
-		int[] xTriangle = {x, x - 5, x + 5};
-		int[] yTriangle = {y, y - 5, y - 5};
-		g.drawPolygon(xTriangle, yTriangle, 3);
+		// int x = (client.getExitTime()) * (this.lineSizeX / this.time) + this.xStart;
+		// g.drawString(client.getLabel(), x, this.yStart + this.lineDistance + 20 );
+		// g.drawLine(x,this.yStart + this.lineDistance, x, this.yStart + this.lineDistance + 50);
+		// int y = this.yStart + this.lineDistance + 50;
+		// int[] xTriangle = {x, x - 5, x + 5};
+		// int[] yTriangle = {y, y - 5, y - 5};
+		// g.drawPolygon(xTriangle, yTriangle, 3);
 	}
 	
 	/**
@@ -146,19 +146,19 @@ public class Diagram extends JFrame {
 	 * @param g Instancia de Graphics para dibujar
 	 */
 	public void drawTimeScale(Graphics g){
-		if (this.time != 0) {
-			 g.drawLine(this.xStart, this.yStart, this.lineSizeX + this.xStart, this.yStart);
-			 g.drawLine(this.xStart, this.yStart + this.lineDistance, this.lineSizeX + this.xStart,  this.yStart + this.lineDistance);
-			 int scale = this.lineSizeX / this.getTime();
-			 for (int i = 0; i <= this.getTime(); i++) {
-				 int x =this.xStart +(i * scale);
-				g.drawLine(x, this.yStart - 10, x,  this.yStart + 10);
-				if (i % 2 == 0) {
-					g.drawString(""+i, x, this.yStart + 20);
-				}
+		// if (this.time != 0) {
+		// 	 g.drawLine(this.xStart, this.yStart, this.lineSizeX + this.xStart, this.yStart);
+		// 	 g.drawLine(this.xStart, this.yStart + this.lineDistance, this.lineSizeX + this.xStart,  this.yStart + this.lineDistance);
+		// 	 int scale = this.lineSizeX / this.getTime();
+		// 	 for (int i = 0; i <= this.getTime(); i++) {
+		// 		 int x =this.xStart +(i * scale);
+		// 		g.drawLine(x, this.yStart - 10, x,  this.yStart + 10);
+		// 		if (i % 2 == 0) {
+		// 			g.drawString(""+i, x, this.yStart + 20);
+		// 		}
 				
-			}
-		}
+		// 	}
+		// }
 	}
 	
 	/**

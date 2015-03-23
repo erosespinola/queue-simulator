@@ -35,7 +35,7 @@ public class Random {
 	 * 
 	 * @return Regresa el siguiente número de la secuencia
 	 */
-	public int next(double value) {
+	public double next(double value) {
 		this.seed = (this.a * this.seed) % this.m;
 		this.r = this.seed / this.m;
 		return this.normalize(value);
@@ -49,8 +49,8 @@ public class Random {
 	 * 
 	 * @return Regresa un número normalizado dado el parámetro
 	 */
-	private int normalize(double value) {
-		return (int) (this.max + (this.min - this.max) * (-(Math.log(1 - this.r)) / value));
+	private double normalize(double value) {
+		return -(Math.log(1 - this.r) / value);
 	}
 
 }

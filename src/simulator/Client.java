@@ -4,13 +4,13 @@ package simulator;
  * Clase de Cliente
  */
 public class Client {
-	private String label; 		// Identificador del cliente
-	private int arriveTime;		// Tiempo de arribo al sistema
-	private int serviceTime;	// Tiempo de servicio
-	private int waitTime = 0;	// Tiempo de espera en cola
-	private int exitTime;		// Tiempo de salida del sistema
-	private int nextEntry;		// Siguiente entrada al sistema
-	private boolean isBeingServed = false;		// Cliente en servicio
+	private String label;                  // Identificador del cliente
+	private double arriveTime;             // Tiempo de arribo al sistema
+	private double serviceTime;            // Tiempo de servicio
+	private double waitTime = 0;           // Tiempo de espera en cola
+	private double exitTime;               // Tiempo de salida del sistema
+	private double nextEntry;              // Siguiente entrada al sistema
+	private boolean isBeingServed = false; // Cliente en servicio
 	
 	/**
 	 * Constructor de la clase
@@ -21,7 +21,7 @@ public class Client {
 	 * @param label Etiqueta identificadora del cliente
 	 * 			
 	 */
-	public Client(int arriveTime, int nextEntry, int serviceTime, String label) {
+	public Client(double arriveTime, double nextEntry, double serviceTime, String label) {
 	    this.arriveTime = arriveTime;
 	    this.nextEntry = arriveTime + nextEntry;
 	    this.serviceTime = serviceTime;
@@ -35,7 +35,7 @@ public class Client {
 	 * @return Regresa el tiempo de arribo al sistema del cliente
 	 * 			
 	 */
-	public int getArriveTime() {
+	public double getArriveTime() {
 		return arriveTime;
 	}
 	
@@ -45,7 +45,7 @@ public class Client {
 	 * @return Regresa el tiempo de servicio en el servidor del cliente
 	 * 			
 	 */
-	public int getServiceTime() {
+	public double getServiceTime() {
 		return serviceTime;
 	}
 	
@@ -55,7 +55,7 @@ public class Client {
 	 * @return Regresa el tiempo de espera en cola del cliente
 	 * 			
 	 */
-	public int getWaitTime() {
+	public double getWaitTime() {
 		return waitTime;
 	}
 	
@@ -75,7 +75,7 @@ public class Client {
 	 * @return Regresa el tiempo de salida del sistema del cliente
 	 * 			
 	 */
-	public int getExitTime() {
+	public double getExitTime() {
 		return exitTime;
 	}
 	
@@ -85,7 +85,7 @@ public class Client {
 	 * @return Regresa el tiempo de la siguiente entrada al sistema
 	 * 			
 	 */
-	public int getNextEntry() {
+	public double getNextEntry() {
 		return nextEntry;
 	}
 	
@@ -105,21 +105,18 @@ public class Client {
 	 * @return Regresa el tiempo que total del cliente en el sistema
 	 * 			
 	 */
-	public int getSystemTime(){
+	public double getSystemTime(){
 		return this.waitTime + this.serviceTime;
 	}
-	
-	/**
-	 * Incrementa el tiempo que el cliente ha esperado si no esta siendo servido,
-	 * además incrementa su tiempo de salida
-	 * 		
-	 */
-	public void IncrementWaitingTime() { 
-		if(!isBeingServed) {
-			waitTime++;
-			exitTime++;
-		}
-	}
+
+  /**
+   * Determina el tiempo de espera y el tiempo de salida
+   *
+   */
+  public void setWaitingTime(double time) {
+    this.waitTime = time;
+    this.exitTime = arriveTime + waitTime + serviceTime;
+  }
 	
 	/**
 	 * Imprime el tiempo de entrada al sistema del cliente
@@ -145,5 +142,5 @@ public class Client {
 		isBeingServed = true;
 		System.out.println("    " + label + " ha entrado en servicio en el tiempo: " + (waitTime + arriveTime) + " con tiempo de salida: " + exitTime);
 	}
-  
+
 }

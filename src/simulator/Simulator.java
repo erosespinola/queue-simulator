@@ -9,37 +9,49 @@ import random.Random;
 public class Simulator {
 	private ArrayList<Client> clients;
   private double idleTime = 0;
-	private int nextEntryEvent = 0;
-	private int nextExitEvent = -1;
+	private double nextEntryEvent = 0;
+	private double nextExitEvent = -1;
   private int arrivals = 0;
 	private Random random;
-	private int time = -1;
+	private double time = 0;
 	private double lambda;
 	private double miu;
 	private int id = 0;
   private int listHead = 0;
+  private double simulationTime;
 
-	public Simulator(double lambda, double miu, double seed) {
+	public Simulator(double lambda, double miu, double seed, double simulationTime) {
 		this.clients = new ArrayList<Client>();
 		this.lambda = lambda;
 		this.miu = miu;
 		this.random = new Random(seed, 0, 5);
+    this.simulationTime = simulationTime;
 	}
 
 	/**
 	 * Avanza la simulación hacia el siguiente evento
+   *
+   * @return boolean bandera que determina si la simulación avanza o no
+   *
 	 */
-	public void Advance() {
+	public boolean Advance() {
 
-    time++;
+    // set next time
+    if(nextExitEvent == -1) {
+      time = nextEntryEvent;
+    }
+    else {
+      time = nextExitEvent > nextEntryEvent ? nextEntryEvent : nextExitEvent;
+    }
 
-		incrementWaitingTime();
+    if(time > simulationTime) {
+      return false;
+    }
 
 		// TODO: change printing from standard output to screen
 		// perhaps implement an event system
-		System.out.print("-- Tiempo: " + time + " --");
-		System.out.println(" Siguiente Salida: " + nextExitEvent);
-    
+		System.out.println("-- Tiempo: " + time + " --");
+
 		// if on next entry time, push a new client to the line
 		if(time == nextEntryEvent) {
 
@@ -54,6 +66,12 @@ public class Simulator {
 
 			clients.add(newClient);
       nextEntryEvent = newClient.getNextEntry();
+
+      // calculate waiting time of line entering client
+      if(!newClient.isBeingServed()) {
+        this.calculateWaitTime(clients.size() - 1);
+      }
+
       this.arrivals++;
 		}
 
@@ -68,31 +86,50 @@ public class Simulator {
   			nextClient.serve();
   			nextExitEvent = nextClient.getExitTime();
 			} else {
+        idleTime += nextEntryEvent - nextExitEvent;
 				nextExitEvent = -1;
 			}
 		}
 
-    // increment system idle time
-    if(nextExitEvent == -1) {
-      idleTime++;
-    }
-
 		System.out.println("");
+
+    return true;
 
 	}
 
   /**
+   * Determina el tiempo de espera para un cliente
+   *
+   * @param index lugar de la lista del cliente
+   *
+   */
+  private void calculateWaitTime(int index) {
+    Client client = clients.get(index);
+    if(index == 0) {
+      client.setWaitingTime(0);
+    }
+    else {
+      Client tmp = clients.get(index - 1);
+      client.setWaitingTime(tmp.getExitTime() - client.getArriveTime());
+    }
+  }
+
+  /**
+   *
    * Incrementa el tiempo de espera para todos los clientes en la cola
+   *
    */
   private void incrementWaitingTime() {
     for (Client client : clients) {
-      client.IncrementWaitingTime();
+      // client.IncrementWaitingTime();
     }
   }
 
   /**
    * Calcula el numero promeido de unidades en el sistema al tiempo t
+   *
    * @return double promedio de unidades
+   *
    */
 	public double L() {
     double waitingTime = 0;
@@ -104,7 +141,9 @@ public class Simulator {
 	
   /**
    * Calcula el numero promedio de unidades en la cola al tiempo t
+   *
    * @return double promedio de unidades
+   *
    */
 	public double Lq() {
     double waitingTime = 0;
@@ -116,7 +155,9 @@ public class Simulator {
 
   /**
    * Calcula el tiempo promedio de espera en el sistema al tiempo t
+   *
    * @return double tiempo promedio de espera
+   *
    */
   public double W() {
     double waitingTime = 0;
@@ -128,7 +169,9 @@ public class Simulator {
 
   /**
    * Calcula el tiempo promedio de espera en la cola al tiempo t
+   *
    * @return double tiempo promedio de espera
+   *
    */
   public double Wq() {
     double waitingTime = 0;
@@ -140,19 +183,33 @@ public class Simulator {
 
   /**
    * Calcula el tiempo ocioso del sistema al tiempo t
+   *
    * @return double longitud del tiempo ocioso
+   *
    */
   public double O() {
-    return this.idleTime == 0 ? 0 : this.idleTime - 1;
+    return this.idleTime;
   }
 
   /**
    * Regresa la lista de clientes que han pasado por el sistema
    * incluyendo los que han salido y los que estan actualmente en el
+   *
    * @return ArrayList<Client> clientes servidos
+   *
    */
   public ArrayList<Client> getClients() {
     return clients;
+  }
+
+  /**
+   * Regresa el tiempo actual de la simulación
+   *
+   * @return double tiempo
+   *
+   */
+  public double getTime() {
+    return this.time;
   }
 
 }
