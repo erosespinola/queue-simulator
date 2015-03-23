@@ -1,7 +1,7 @@
 package random;
 
 /**
- * Random Number Generator Class
+ * Clase de generador de números aleatorios
  */
 public class Random {
 	final private double a;
@@ -10,7 +10,14 @@ public class Random {
 	final private int max;
 	private double r;
 	private double seed;
-
+	
+	/**
+	 * Constructor de la clase
+	 * 
+	 * @param seed Semilla para los números aleatorios
+	 * @param min Número mínimo aceptable
+	 * @param max Número máximo aceptable
+	 */
 	public Random(double seed, int min, int max) {
 		this.seed = seed;
 		this.min = min;
@@ -21,12 +28,12 @@ public class Random {
 	}
 
 	/**
-	 * Calculates the next random normalized number in the sequence, using Learnmonth-Lewis
-	 * Random Number Generator
+	 * Calcula el siguiente número aleatorio en la secuencia usando
+	 * el generador Learnmonth-Lewis
 	 * 
-	 * @param value
-	 * 			value that is being used to be normalized
-	 * @return returns the next random number in the sequence
+	 * @param value Valor que es usado para normalizar
+	 * 
+	 * @return Regresa el siguiente número de la secuencia
 	 */
 	public int next(double value) {
 		this.seed = (this.a * this.seed) % this.m;
@@ -36,11 +43,11 @@ public class Random {
 	
 
 	/**
-	 * Normalizes the current random number with a given value
+	 * Normaliza el número dado un parámetro
 	 * 
-	 * @param value
-	 * 			the value that is used to normalized the value
-	 * @return normalized number with the value determined by the user
+	 * @param value Valor usado para normalizar el número
+	 * 
+	 * @return Regresa un número normalizado dado el parámetro
 	 */
 	private int normalize(double value) {
 		return (int) (this.max + (this.min - this.max) * (-(Math.log(1 - this.r)) / value));
