@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import simulator.Client;
 
 /**
- * Clase que implementa los m茅todos necesarios para crear un diagrama de la simulaci贸n
+ * Clase que implementa los m閠odos necesarios para crear un diagrama de la simulaci髇
  *
  */
 @SuppressWarnings("serial")
@@ -20,7 +20,7 @@ public class Diagram extends JFrame {
 	private int xStart, yStart, lineDistance;
 	
 	/**
-	 * @param time Tiempo total de la simulaci贸n
+	 * @param time Tiempo total de la simulaci髇
 	 * @param clients ArrayList de clientes para ser dibujados
 	 */
 	public Diagram(int time, ArrayList<Client> clients) {
@@ -40,7 +40,7 @@ public class Diagram extends JFrame {
 	}
 	
 	/**
-	 * @return Regresa el tiempo total de la simulaci贸n
+	 * @return Regresa el tiempo total de la simulaci髇
 	 */
 	public int getTime() {
 		return time;
@@ -70,10 +70,10 @@ public class Diagram extends JFrame {
 
 	/**
 	 * 
-	 * M茅todo que dibuja los valores de entrada a la simulaci贸n de un cliente
+	 * M閠odo que dibuja los valores de entrada a la simulaci髇 de un cliente
 	 * 
 	 * @param g Instancia de Graphics para dibujar
-	 * @param client Representa el cliente de donde obtener su informaci贸n
+	 * @param client Representa el cliente de donde obtener su informaci髇
 	 */
 	public void drawClientEntered(Graphics g,Client client){
 		int x = (client.getArriveTime()) * (this.lineSizeX / this.time) + this.xStart;
@@ -86,10 +86,10 @@ public class Diagram extends JFrame {
 	
 	/**
 	 * 
-	 * M茅todo que dibuja los valores de entrada a el servicio de un cliente
+	 * M閠odo que dibuja los valores de entrada a el servicio de un cliente
 	 * 
 	 * @param g Instancia de Graphics para dibujar
-	 * @param client Representa el cliente de donde obtener su informaci贸n
+	 * @param client Representa el cliente de donde obtener su informaci髇
 	 */
 	public void drawClientEnteredService(Graphics g,Client client){
 		int x = (client.getWaitTime() + client.getArriveTime()) * (this.lineSizeX / this.time)  + this.xStart;
@@ -103,10 +103,10 @@ public class Diagram extends JFrame {
 	
 	/**
 	 * 
-	 * M茅todo que dibuja los valores de salida del servicio de un cliente
+	 * M閠odo que dibuja los valores de salida del servicio de un cliente
 	 * 
 	 * @param g Instancia de Graphics para dibujar
-	 * @param client Representa el cliente de donde obtener su informaci贸n
+	 * @param client Representa el cliente de donde obtener su informaci髇
 	 */
 	public void drawClientServed(Graphics g,Client client){
 		int x = (client.getExitTime()) * (this.lineSizeX / this.time) + this.xStart;
@@ -120,7 +120,7 @@ public class Diagram extends JFrame {
 	
 	/**
 	 * 
-	 * M茅todo que dibuja la escala de tiempo para la simulaci贸n
+	 * M閠odo que dibuja la escala de tiempo para la simulaci髇
 	 * 
 	 * @param g Instancia de Graphics para dibujar
 	 */

@@ -15,6 +15,9 @@ import javax.swing.border.EtchedBorder;
 
 import simulator.Simulator;
 
+/**
+ * Clase de GUI
+ */
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements ActionListener {
 	private JTextField textFieldSeed;
@@ -22,7 +25,11 @@ public class GUI extends JFrame implements ActionListener {
 	private JTextField textFieldMiu;
 	private JTextField textFieldTime;
 	
-
+	/**
+	 * Constructor de la clase
+	 * Inicializa la ventana y elementos en ella
+	 * 			
+	 */
 	public GUI() {
 		setItems();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,14 +39,21 @@ public class GUI extends JFrame implements ActionListener {
 		setSize(new Dimension(600, 400));
 		setVisible(true);
 	}
-
+	
+	/**
+	 * Función que identifica acciones en la ventana
+	 * 		
+	 * @param arg0 Evento ocurrido en la ventana
+	 * 	
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-
 		if (arg0.getActionCommand().equals("Simulate")) {
 			int time = 0;
 			int totalTime = 0;
 			double lambda = 0, seed = 0, miu = 0;
+			
+			// Validación de los campos
 			if (!this.textFieldSeed.getText().isEmpty()
 					&& isNumeric(this.textFieldSeed.getText())
 					&& !this.textFieldSeed.getText().isEmpty()
@@ -49,42 +63,45 @@ public class GUI extends JFrame implements ActionListener {
 					&& !this.textFieldSeed.getText().isEmpty()
 					&& isNumeric(this.textFieldSeed.getText())) {
 
-				try {
-					seed = Double.parseDouble(this.textFieldSeed.getText());
-					lambda = Double.parseDouble(this.textFieldLambda.getText());
-					miu = Double.parseDouble(this.textFieldMiu.getText());
-					time = Integer.parseInt(this.textFieldTime.getText());
-					totalTime = time;
-
-					if (miu < lambda) {
-						throw new NumberFormatException();
-					}
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "NÃºmeros incorrectos");
-					time = -1;
-					e.printStackTrace();
+				seed = Double.parseDouble(this.textFieldSeed.getText());
+				lambda = Double.parseDouble(this.textFieldLambda.getText());
+				miu = Double.parseDouble(this.textFieldMiu.getText());
+				time = Integer.parseInt(this.textFieldTime.getText());
+				totalTime = time;
+				
+				if (miu < lambda) {
+					JOptionPane.showMessageDialog(null, "Números inválidos");
+					return;
 				}
 
 				Simulator simulator = new Simulator(lambda, miu, seed);
-				// advance simulator for given time units
+				
+				// Avanza el simuladar en unidades de tiempo dadas
 				while (time-- >= 0) {
 					simulator.Advance();
 				}
-			
+				
+				// Impresión de resultados en panel
 				System.out.println(simulator.L());
 				System.out.println(simulator.Lq());
-				//Call for diagram Frame
+				
+				// Creación del diagrama de simulación
 				if (!simulator.getFinishedClients().isEmpty()  && totalTime > 0) {
 					Diagram di = new Diagram(totalTime, simulator.getFinishedClients());
 					di.repaint();
 				}
+				
 				return;
 			}
-			JOptionPane.showMessageDialog(null,
-					"Fill out all the fields with numeric values");
+			
+			JOptionPane.showMessageDialog(null, "Fill out all the fields with numeric values");
 		}
 	}
-
+	
+	/**
+	 * Función que coloca e inicializa los elementos en la ventana
+	 * 		
+	 */
 	private void setItems() {
 		JLabel lblSeed = new JLabel("S");
 		lblSeed.setBounds(10, 14, 128, 14);
@@ -147,7 +164,14 @@ public class GUI extends JFrame implements ActionListener {
 		this.repaint();
 		
 	}
-
+	
+	/**
+	 * Función que identifica si un String es numérico o no
+	 * 		
+	 * @param str String a probar
+	 * 	
+	 * @return True si es numérico, false de otro modo
+	 */
 	private boolean isNumeric(String str) {
 		try {
 			Double.parseDouble(str);
@@ -158,7 +182,6 @@ public class GUI extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
 		GUI g = new GUI();
 	}
 }
