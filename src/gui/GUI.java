@@ -24,6 +24,8 @@ public class GUI extends JFrame implements ActionListener {
 	private JTextField textFieldMiu;
 	private JTextField textFieldTime;
 	
+	private JLabel lblW, lblWq, lblL, lblLq, lblO;
+	
 	/**
 	 * Constructor de la clase
 	 * Inicializa la ventana y elementos en ella
@@ -81,11 +83,12 @@ public class GUI extends JFrame implements ActionListener {
 				}
 
 				//Impresión de resultados en panel
-				System.out.println("L: " + simulator.L());
-				System.out.println("Lq: " + simulator.Lq());
-		        System.out.println("W: " + simulator.W());
-		        System.out.println("Wq: " + simulator.Wq());
-		        System.out.println("O: " + simulator.O());
+				
+				this.lblL.setText(this.lblL.getText() + simulator.L());
+				this.lblLq.setText(this.lblLq.getText() + simulator.Lq());
+				this.lblW.setText(this.lblW.getText() + simulator.W());
+				this.lblWq.setText(this.lblWq.getText() + simulator.Wq());
+				this.lblO.setText(this.lblO.getText() + simulator.O());
 
 		        // Creación del diagrama de simulación
 				if (!simulator.getClients().isEmpty()  && totalTime > 0) {
@@ -161,6 +164,27 @@ public class GUI extends JFrame implements ActionListener {
 		panelResults.setBounds(148, 11, 436, 349);
 		panelResults.repaint();
 		getContentPane().add(panelResults);
+		panelResults.setLayout(null);
+		
+		this.lblW = new JLabel("W = ");
+		lblW.setBounds(10, 11, 197, 14);
+		panelResults.add(lblW);
+		
+		this.lblWq = new JLabel("Wq = ");
+		lblWq.setBounds(10, 36, 197, 14);
+		panelResults.add(lblWq);
+		
+		this.lblL = new JLabel("L = ");
+		lblL.setBounds(10, 61, 197, 14);
+		panelResults.add(lblL);
+		
+		this.lblLq = new JLabel("Lq = ");
+		lblLq.setBounds(10, 86, 197, 14);
+		panelResults.add(lblLq);
+		
+		this.lblO = new JLabel("O = ");
+		lblO.setBounds(10, 111, 197, 14);
+		panelResults.add(lblO);
 
 		btnSimulate.addActionListener(this);
 		this.repaint();

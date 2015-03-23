@@ -8,18 +8,19 @@ import javax.swing.JFrame;
 import simulator.Client;
 
 /**
- * Clase que implementa los métodos necesarios para crear un diagrama de la simulación
+ * Clase de Diagrama
  *
  */
 @SuppressWarnings("serial")
 public class Diagram extends JFrame {
-	
 	private int time;
 	private ArrayList<Client> clients;
 	private int lineSizeX;
 	private int xStart, yStart, lineDistance;
 	
 	/**
+	 * Función que inicializa los elementos del diagrama
+	 * 
 	 * @param time Tiempo total de la simulación
 	 * @param clients ArrayList de clientes para ser dibujados
 	 */
@@ -40,6 +41,8 @@ public class Diagram extends JFrame {
 	}
 	
 	/**
+	 * Getter del tiempo
+	 * 
 	 * @return Regresa el tiempo total de la simulación
 	 */
 	public int getTime() {
@@ -47,6 +50,8 @@ public class Diagram extends JFrame {
 	}
 
 	/**
+	 * Setter del tiempo
+	 * 
 	 * @param time
 	 */
 	public void setTime(int time) {
@@ -54,6 +59,8 @@ public class Diagram extends JFrame {
 	}
 	
 	/**
+	 * Getter de los clientes
+	 * 
 	 * @return Regresa un ArrayList con los clientes a dibujar
 	 */
 	public ArrayList<Client> getClients() {
@@ -61,6 +68,8 @@ public class Diagram extends JFrame {
 	}
 
 	/**
+	 * Setter de los clientes
+	 * 
 	 * @param clients
 	 */
 	public void setClients(ArrayList<Client> clients) {
@@ -69,7 +78,6 @@ public class Diagram extends JFrame {
 
 
 	/**
-	 * 
 	 * Método que dibuja los valores de entrada a la simulación de un cliente
 	 * 
 	 * @param g Instancia de Graphics para dibujar
@@ -85,7 +93,6 @@ public class Diagram extends JFrame {
 	}
 	
 	/**
-	 * 
 	 * Método que dibuja los valores de entrada a el servicio de un cliente
 	 * 
 	 * @param g Instancia de Graphics para dibujar
@@ -102,7 +109,6 @@ public class Diagram extends JFrame {
 	}
 	
 	/**
-	 * 
 	 * Método que dibuja los valores de salida del servicio de un cliente
 	 * 
 	 * @param g Instancia de Graphics para dibujar
@@ -119,7 +125,6 @@ public class Diagram extends JFrame {
 	}
 	
 	/**
-	 * 
 	 * Método que dibuja la escala de tiempo para la simulación
 	 * 
 	 * @param g Instancia de Graphics para dibujar
@@ -140,8 +145,10 @@ public class Diagram extends JFrame {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.awt.Window#paint(java.awt.Graphics)
+	/**
+	 * Método que llama a pintar elementos en la gráfica
+	 * 
+	 * @param g Instancia de Graphics para dibujar
 	 */
 	public void paint (Graphics g) {
 		if (this.time != 0) {
