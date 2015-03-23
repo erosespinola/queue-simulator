@@ -71,11 +71,15 @@ public class GUI extends JFrame implements ActionListener {
 					simulator.Advance();
 				}
 			
-				System.out.println(simulator.L());
-				System.out.println(simulator.Lq());
+				System.out.println("L: " + simulator.L());
+				System.out.println("Lq: " + simulator.Lq());
+        System.out.println("W: " + simulator.W());
+        System.out.println("Wq: " + simulator.Wq());
+        System.out.println("O: " + simulator.O());
+
 				//Call for diagram Frame
-				if (!simulator.getFinishedClients().isEmpty()  && totalTime > 0) {
-					Diagram di = new Diagram(totalTime, simulator.getFinishedClients());
+				if (!simulator.getClients().isEmpty()  && totalTime > 0) {
+					Diagram di = new Diagram(totalTime, simulator.getClients());
 					di.repaint();
 				}
 				return;
