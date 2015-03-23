@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,11 +14,13 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import simulator.Simulator;
+
 import javax.swing.SwingConstants;
 
 /**
  * Clase de GUI
  */
+
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements ActionListener {
 	private JTextField textFieldSeed;
@@ -37,7 +40,7 @@ public class GUI extends JFrame implements ActionListener {
 		setItems();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
-		setResizable(true);
+		setResizable(false);
 		setTitle("Simulador de Cola M/M/1");
 		setSize(new Dimension(600, 400));
 		setVisible(true);
@@ -116,7 +119,7 @@ public class GUI extends JFrame implements ActionListener {
 
 		textFieldSeed = new JTextField();
 		textFieldSeed.setText("35");
-		textFieldSeed.setToolTipText("Set seed\r\n");
+		textFieldSeed.setToolTipText("Definir semilla");
 		textFieldSeed.setBounds(25, 11, 118, 20);
 		getContentPane().add(textFieldSeed);
 		textFieldSeed.setColumns(10);
@@ -127,7 +130,7 @@ public class GUI extends JFrame implements ActionListener {
 
 		textFieldLambda = new JTextField();
 		textFieldLambda.setText("10");
-		textFieldLambda.setToolTipText("Set lambda");
+		textFieldLambda.setToolTipText("Definir lambda");
 		textFieldLambda.setBounds(25, 36, 118, 20);
 		getContentPane().add(textFieldLambda);
 		textFieldLambda.setColumns(10);
@@ -138,7 +141,7 @@ public class GUI extends JFrame implements ActionListener {
 
 		textFieldMiu = new JTextField();
 		textFieldMiu.setText("15");
-		textFieldMiu.setToolTipText("Set miu");
+		textFieldMiu.setToolTipText("Definir miu");
 		textFieldMiu.setBounds(25, 61, 118, 20);
 		getContentPane().add(textFieldMiu);
 		textFieldMiu.setColumns(10);
@@ -149,12 +152,12 @@ public class GUI extends JFrame implements ActionListener {
 
 		textFieldTime = new JTextField();
 		textFieldTime.setText("50");
-		textFieldTime.setToolTipText("Set time");
+		textFieldTime.setToolTipText("Definir tiempo");
 		textFieldTime.setBounds(25, 89, 118, 20);
 		getContentPane().add(textFieldTime);
 		textFieldTime.setColumns(10);
 
-		JButton btnSimulate = new JButton("Simulate");
+		JButton btnSimulate = new JButton("Simular");
 		btnSimulate.setToolTipText("");
 		btnSimulate.setBounds(10, 120, 128, 23);
 		getContentPane().add(btnSimulate);
@@ -188,7 +191,7 @@ public class GUI extends JFrame implements ActionListener {
 		lblO.setBounds(10, 111, 416, 14);
 		panelResults.add(lblO);
 		
-		lblCreadoPorEros = new JLabel("Creado por Antonio, Eros, Diego y Pablo");
+		lblCreadoPorEros = new JLabel("Creado por Antonio, Diego, Eros y Pablo");
 		lblCreadoPorEros.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCreadoPorEros.setBounds(10, 324, 416, 14);
 		panelResults.add(lblCreadoPorEros);
@@ -215,6 +218,7 @@ public class GUI extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
+		@SuppressWarnings("unused")
 		GUI g = new GUI();
 	}
 }

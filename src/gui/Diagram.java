@@ -68,7 +68,7 @@ public class Diagram extends JFrame {
 	/**
 	 * Setter del tiempo
 	 * 
-	 * @param time
+	 * @param time Tiempo de la línea de tiempo
 	 */
 	public void setTime(int time) {
 		this.time = time;
@@ -86,7 +86,7 @@ public class Diagram extends JFrame {
 	/**
 	 * Setter de los clientes
 	 * 
-	 * @param clients
+	 * @param clients Clientes a simular
 	 */
 	public void setClients(ArrayList<Client> clients) {
 		this.clients = clients;
