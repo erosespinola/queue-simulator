@@ -21,12 +21,13 @@ public class GUI extends JFrame implements ActionListener {
 	private JTextField textFieldLambda;
 	private JTextField textFieldMiu;
 	private JTextField textFieldTime;
+	
 
 	public GUI() {
 		setItems();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
-		setResizable(false);
+		setResizable(true);
 		setTitle("Simulador de Cola M/M/1");
 		setSize(new Dimension(600, 400));
 		setVisible(true);
@@ -37,6 +38,7 @@ public class GUI extends JFrame implements ActionListener {
 
 		if (arg0.getActionCommand().equals("Simulate")) {
 			int time = 0;
+			int totalTime = 0;
 			double lambda = 0, seed = 0, miu = 0;
 			if (!this.textFieldSeed.getText().isEmpty()
 					&& isNumeric(this.textFieldSeed.getText())
@@ -52,6 +54,7 @@ public class GUI extends JFrame implements ActionListener {
 					lambda = Double.parseDouble(this.textFieldLambda.getText());
 					miu = Double.parseDouble(this.textFieldMiu.getText());
 					time = Integer.parseInt(this.textFieldTime.getText());
+					totalTime = time;
 
 					if (miu < lambda) {
 						throw new NumberFormatException();
@@ -67,8 +70,14 @@ public class GUI extends JFrame implements ActionListener {
 				while (time-- >= 0) {
 					simulator.Advance();
 				}
+			
 				System.out.println(simulator.L());
 				System.out.println(simulator.Lq());
+				//Call for diagram Frame
+				if (!simulator.getFinishedClients().isEmpty()  && totalTime > 0) {
+					Diagram di = new Diagram(totalTime, simulator.getFinishedClients());
+					di.repaint();
+				}
 				return;
 			}
 			JOptionPane.showMessageDialog(null,
@@ -131,9 +140,12 @@ public class GUI extends JFrame implements ActionListener {
 				null));
 		panelResults.setBackground(Color.WHITE);
 		panelResults.setBounds(148, 11, 436, 349);
+		panelResults.repaint();
 		getContentPane().add(panelResults);
 
 		btnSimulate.addActionListener(this);
+		this.repaint();
+		
 	}
 
 	private boolean isNumeric(String str) {

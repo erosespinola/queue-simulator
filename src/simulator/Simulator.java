@@ -1,9 +1,18 @@
 package simulator;
 
+
 import java.util.*;
+
 import random.Random;
 
 public class Simulator {
+	//added for diagram use
+	private ArrayList<Client> finishedClients;
+	
+	public ArrayList<Client> getFinishedClients() {
+		return finishedClients;
+	}
+
 	private ArrayList<Client> clients;
 	private int nextEntryEvent = 0;
 	private int nextExitEvent = -1;
@@ -15,9 +24,11 @@ public class Simulator {
 
 	public Simulator(double lambda, double miu, double seed) {
 		this.clients = new ArrayList<Client>();
+		this.finishedClients = new ArrayList<Client>();
 		this.lambda = lambda;
 		this.miu = miu;
 		this.random = new Random(seed, 0, 5);
+		
 	}
 
 	/**
@@ -53,13 +64,19 @@ public class Simulator {
 		if (nextExitEvent >= 0 && time == nextExitEvent) {
 			Client tmpClient = clients.remove(0);
 			tmpClient.exit();
+			this.finishedClients.add(tmpClient); //Added for saving the values for the diagram
+			
+			
 
 			// serve next client in line
 			if (!clients.isEmpty()) {
 				Client nextClient = clients.get(0);
 				nextClient.serve();
+				
 				nextExitEvent = nextClient.getExitTime();
 			} else {
+				
+
 				nextExitEvent = -1;
 			}
 
