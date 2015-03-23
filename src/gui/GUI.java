@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -80,14 +79,17 @@ public class GUI extends JFrame implements ActionListener {
 				while (time-- >= 0) {
 					simulator.Advance();
 				}
-				
-				// Impresión de resultados en panel
-				System.out.println(simulator.L());
-				System.out.println(simulator.Lq());
-				
-				// Creación del diagrama de simulación
-				if (!simulator.getFinishedClients().isEmpty()  && totalTime > 0) {
-					Diagram di = new Diagram(totalTime, simulator.getFinishedClients());
+
+				//Impresión de resultados en panel
+				System.out.println("L: " + simulator.L());
+				System.out.println("Lq: " + simulator.Lq());
+		        System.out.println("W: " + simulator.W());
+		        System.out.println("Wq: " + simulator.Wq());
+		        System.out.println("O: " + simulator.O());
+
+		        // Creación del diagrama de simulación
+				if (!simulator.getClients().isEmpty()  && totalTime > 0) {
+					Diagram di = new Diagram(totalTime, simulator.getClients());
 					di.repaint();
 				}
 				

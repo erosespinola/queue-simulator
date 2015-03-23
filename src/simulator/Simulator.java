@@ -1,40 +1,37 @@
 package simulator;
 
-
 import java.util.*;
-
 import random.Random;
 
+/**
+ * Simulador de cola M/M/1
+ */
 public class Simulator {
-	//added for diagram use
-	private ArrayList<Client> finishedClients;
-	
-	public ArrayList<Client> getFinishedClients() {
-		return finishedClients;
-	}
-
 	private ArrayList<Client> clients;
+  private double idleTime = 0;
 	private int nextEntryEvent = 0;
 	private int nextExitEvent = -1;
+  private int arrivals = 0;
 	private Random random;
-	private int time = 0;
+	private int time = -1;
 	private double lambda;
 	private double miu;
 	private int id = 0;
+  private int listHead = 0;
 
 	public Simulator(double lambda, double miu, double seed) {
 		this.clients = new ArrayList<Client>();
-		this.finishedClients = new ArrayList<Client>();
 		this.lambda = lambda;
 		this.miu = miu;
 		this.random = new Random(seed, 0, 5);
-		
 	}
 
 	/**
-	 * Advances the simulation
+	 * Avanza la simulación hacia el siguiente evento
 	 */
 	public void Advance() {
+
+    time++;
 
 		incrementWaitingTime();
 
@@ -42,81 +39,120 @@ public class Simulator {
 		// perhaps implement an event system
 		System.out.print("-- Tiempo: " + time + " --");
 		System.out.println(" Siguiente Salida: " + nextExitEvent);
-
+    
 		// if on next entry time, push a new client to the line
-		if (time == nextEntryEvent) {
+		if(time == nextEntryEvent) {
 
-			Client newClient = new Client(time, this.random.next(this.lambda),
-					this.random.next(this.miu), "Client " + (++id));
+			Client newClient = new Client(time, this.random.next(this.lambda), this.random.next(this.miu), "Client " + (++id));
 			newClient.enter();
 
 			// if first in line, serve that client
-			if (clients.isEmpty()) {
+			if(listHead == clients.size()) {
 				newClient.serve();
 				nextExitEvent = newClient.getExitTime();
 			}
 
 			clients.add(newClient);
-
+      nextEntryEvent = newClient.getNextEntry();
+      this.arrivals++;
 		}
 
 		// if on next exit time, drop the client from the line
-		if (nextExitEvent >= 0 && time == nextExitEvent) {
-			Client tmpClient = clients.remove(0);
+		if(nextExitEvent >= 0 && time == nextExitEvent) {
+			Client tmpClient = clients.get(listHead++);
 			tmpClient.exit();
-			this.finishedClients.add(tmpClient); //Added for saving the values for the diagram
-			
-			
 
 			// serve next client in line
-			if (!clients.isEmpty()) {
-				Client nextClient = clients.get(0);
-				nextClient.serve();
-				
-				nextExitEvent = nextClient.getExitTime();
+      if(listHead != clients.size()) {
+  			Client nextClient = clients.get(listHead);
+  			nextClient.serve();
+  			nextExitEvent = nextClient.getExitTime();
 			} else {
-				
-
 				nextExitEvent = -1;
 			}
-
 		}
 
-		// determine next entry time
-		if (!clients.isEmpty()) {
-			Client topClient = clients.get(clients.size() - 1);
-			nextEntryEvent = topClient.getNextEntry();
-		}
-
-		time++;
+    // increment system idle time
+    if(nextExitEvent == -1) {
+      idleTime++;
+    }
 
 		System.out.println("");
 
 	}
 
+  /**
+   * Incrementa el tiempo de espera para todos los clientes en la cola
+   */
+  private void incrementWaitingTime() {
+    for (Client client : clients) {
+      client.IncrementWaitingTime();
+    }
+  }
+
+  /**
+   * Calcula el numero promeido de unidades en el sistema al tiempo t
+   * @return double promedio de unidades
+   */
 	public double L() {
-		double waitingTime = 0;
-		for (int i = 0; i < this.clients.size(); i++) {
-			waitingTime += this.clients.get(i).getSystemTime();
-		}
-		return waitingTime/this.time;
+    double waitingTime = 0;
+    for(Client client : clients) {
+      waitingTime += client.getSystemTime();
+    }
+		return waitingTime / this.time;
 	}
 	
+  /**
+   * Calcula el numero promedio de unidades en la cola al tiempo t
+   * @return double promedio de unidades
+   */
 	public double Lq() {
-		double waitingTime = 0;
-		for (int i = 0; i < this.clients.size(); i++) {
-			waitingTime += this.clients.get(i).getWaitTime();
-		}
-		return waitingTime/this.time;
+    double waitingTime = 0;
+    for(Client client : clients) {
+      waitingTime += client.getWaitTime();
+    }
+		return waitingTime / this.time;
 	}
 
-	/**
-	 * Increment waiting time for all items in line
-	 */
-	private void incrementWaitingTime() {
-		for (Client client : clients) {
-			client.IncrementWaitingTime();
-		}
-	}
+  /**
+   * Calcula el tiempo promedio de espera en el sistema al tiempo t
+   * @return double tiempo promedio de espera
+   */
+  public double W() {
+    double waitingTime = 0;
+    for(Client client : clients) {
+      waitingTime += client.getSystemTime();
+    }
+    return waitingTime / this.arrivals;
+  }
+
+  /**
+   * Calcula el tiempo promedio de espera en la cola al tiempo t
+   * @return double tiempo promedio de espera
+   */
+  public double Wq() {
+    double waitingTime = 0;
+    for(Client client : clients) {
+      waitingTime += client.getWaitTime();
+    }
+    return waitingTime / this.arrivals;
+  }
+
+  /**
+   * Calcula el tiempo ocioso del sistema al tiempo t
+   * @return double longitud del tiempo ocioso
+   */
+  public double O() {
+    return this.idleTime == 0 ? 0 : this.idleTime - 1;
+  }
+
+  /**
+   * Regresa la lista de clientes que han pasado por el sistema
+   * incluyendo los que han salido y los que estan actualmente en el
+   * @return ArrayList<Client> clientes servidos
+   */
+  public ArrayList<Client> getClients() {
+    return clients;
+  }
 
 }
