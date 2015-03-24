@@ -115,7 +115,7 @@ public class GUI extends JFrame implements ActionListener {
 		getContentPane().add(lblSeed);
 
 		textFieldSeed = new JTextField();
-		textFieldSeed.setText("35");
+		textFieldSeed.setText("0");
 		textFieldSeed.setToolTipText("Definir semilla");
 		textFieldSeed.setBounds(25, 11, 118, 20);
 		getContentPane().add(textFieldSeed);
@@ -126,7 +126,7 @@ public class GUI extends JFrame implements ActionListener {
 		getContentPane().add(lblLambda);
 
 		textFieldLambda = new JTextField();
-		textFieldLambda.setText("10");
+		textFieldLambda.setText("0");
 		textFieldLambda.setToolTipText("Definir lambda");
 		textFieldLambda.setBounds(25, 36, 118, 20);
 		getContentPane().add(textFieldLambda);
@@ -137,7 +137,7 @@ public class GUI extends JFrame implements ActionListener {
 		getContentPane().add(lblMiu);
 
 		textFieldMiu = new JTextField();
-		textFieldMiu.setText("15");
+		textFieldMiu.setText("0");
 		textFieldMiu.setToolTipText("Definir miu");
 		textFieldMiu.setBounds(25, 61, 118, 20);
 		getContentPane().add(textFieldMiu);
@@ -148,7 +148,7 @@ public class GUI extends JFrame implements ActionListener {
 		getContentPane().add(lblTime);
 
 		textFieldTime = new JTextField();
-		textFieldTime.setText("50");
+		textFieldTime.setText("0");
 		textFieldTime.setToolTipText("Definir tiempo");
 		textFieldTime.setBounds(25, 89, 118, 20);
 		getContentPane().add(textFieldTime);

@@ -112,6 +112,7 @@ public class Client {
   /**
    * Determina el tiempo de espera y el tiempo de salida
    *
+   * @param time Tiempo de espera
    */
   public void setWaitingTime(double time) {
     this.waitTime = time;

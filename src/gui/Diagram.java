@@ -102,6 +102,7 @@ public class Diagram extends JPanel {
 	 * Formatea el tiempo para la escala necesaria de acuerdo al total de tiempo y de clientes
 	 * 
 	 * @param time Tiempo a formatear
+	 * @return Tiempo formateado
 	 */
 	public double getFormatedTime(double time) {
 		if (time < 1) {

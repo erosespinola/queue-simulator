@@ -122,7 +122,7 @@ public class Simulator {
   }
 
   /**
-   * Calcula el numero promeido de unidades en el sistema al tiempo t
+   * Calcula el numero promeido de unidades en el sistema
    *
    * @return double promedio de unidades
    *
@@ -136,7 +136,7 @@ public class Simulator {
 	}
 	
   /**
-   * Calcula el numero promedio de unidades en la cola al tiempo t
+   * Calcula el numero promedio de unidades en la cola
    *
    * @return double promedio de unidades
    *
@@ -150,7 +150,7 @@ public class Simulator {
 	}
 
   /**
-   * Calcula el tiempo promedio de espera en el sistema al tiempo t
+   * Calcula el tiempo promedio de espera en el sistema
    *
    * @return double tiempo promedio de espera
    *
@@ -178,7 +178,7 @@ public class Simulator {
   }
 
   /**
-   * Calcula el tiempo ocioso del sistema al tiempo t
+   * Calcula el tiempo ocioso del sistema
    *
    * @return double longitud del tiempo ocioso
    *
