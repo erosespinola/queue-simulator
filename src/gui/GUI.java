@@ -54,10 +54,8 @@ public class GUI extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getActionCommand().equals("Simulate")) {
-			double time = 0;
-			// int totalTime = 0;
-			double lambda = 0, seed = 0, miu = 0;
+		if (arg0.getActionCommand().equals("Simular")) {
+			double lambda = 0, seed = 0, miu = 0, time = 0;
 			
 			// Validación de los campos
 			if (!this.textFieldSeed.getText().isEmpty()
@@ -73,7 +71,6 @@ public class GUI extends JFrame implements ActionListener {
 				lambda = Double.parseDouble(this.textFieldLambda.getText());
 				miu = Double.parseDouble(this.textFieldMiu.getText());
 				time = Double.parseDouble(this.textFieldTime.getText());
-				// totalTime = time;
 				
 				if (miu < lambda) {
 					JOptionPane.showMessageDialog(null, "Números inválidos");
@@ -83,10 +80,10 @@ public class GUI extends JFrame implements ActionListener {
 				Simulator simulator = new Simulator(lambda, miu, seed, time);
 				
 				// Avanza el simuladar en unidades de tiempo dadas
-        boolean canAdvance = true;
-        while(canAdvance) {
-          canAdvance = simulator.Advance();
-        }
+		        boolean canAdvance = true;
+		        while(canAdvance) {
+		          canAdvance = simulator.Advance();
+		        }
 
 				//Impresión de resultados en panel
 				this.lblL.setText("L = " + simulator.L());
@@ -96,10 +93,10 @@ public class GUI extends JFrame implements ActionListener {
 				this.lblO.setText("O = " + simulator.O());
 
 		        // Creación del diagrama de simulación
-				// if (!simulator.getClients().isEmpty()  && totalTime > 0) {
-				// 	Diagram di = new Diagram(totalTime, simulator.getClients());
-				// 	di.repaint();
-				// }
+				if (!simulator.getClients().isEmpty()  && time > 0) {
+					Diagram di = new Diagram(time, simulator.getClients());
+					di.repaint();
+				}
 				
 				return;
 			}

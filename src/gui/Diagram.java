@@ -18,8 +18,8 @@ import simulator.Client;
  *
  */
 @SuppressWarnings("serial")
-public class Diagram extends JFrame {
-	private int time;
+public class Diagram extends JPanel {
+	private double time;
 	private ArrayList<Client> clients;
 	private int lineSizeX;
 	private int xStart, yStart, lineDistance;
@@ -30,30 +30,36 @@ public class Diagram extends JFrame {
 	 * @param time Tiempo total de la simulación
 	 * @param clients ArrayList de clientes para ser dibujados
 	 */
-	public Diagram(int time, ArrayList<Client> clients) {
+	public Diagram(double time, ArrayList<Client> clients) {
 		super();
 		this.time = time;
 		this.clients = clients;
-		this.xStart = 100;
-		this.yStart = 100;
+		this.xStart = 50;
+		this.yStart = 80;
 		this.lineSizeX = (int)((this.getFormatedTime(time)) + this.xStart);
 		this.lineDistance = 200;
 		this.setBackground(Color.WHITE);
+		this.setPreferredSize(new Dimension((int)(this.lineSizeX + 100), 400));
 		
 		//Confiuración del Frame que contiene el Panel donde se pinta el gráfico
-        JFrame frame = new JFrame();
-        this.setPreferredSize(new Dimension((int)this.lineSizeX * 2, 500));
         JScrollPane scrollPane = new JScrollPane(this);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(0,0,(int)this.lineSizeX,500);
+        scrollPane.setBounds(0,0,797, 373);
+        
         JPanel contentPane = new JPanel(null);
-        contentPane.setPreferredSize(new Dimension((int)this.lineSizeX, 500));
+        contentPane.setPreferredSize(new Dimension((int)this.lineSizeX, 400));
         contentPane.add(scrollPane);
-        frame.setContentPane(contentPane);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setVisible(true);	
+        
+        JFrame frmDiagramaDeCola = new JFrame();
+        frmDiagramaDeCola.setTitle("Diagrama de cola");
+        frmDiagramaDeCola.setContentPane(contentPane);
+        frmDiagramaDeCola.pack();
+        frmDiagramaDeCola.setSize(800, 400);
+        frmDiagramaDeCola.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frmDiagramaDeCola.setVisible(true);	
+        frmDiagramaDeCola.setResizable(false);
+        
 	}
 	
 	/**
@@ -61,7 +67,7 @@ public class Diagram extends JFrame {
 	 * 
 	 * @return Regresa el tiempo total de la simulación
 	 */
-	public int getTime() {
+	public double getTime() {
 		return time;
 	}
 
@@ -99,10 +105,10 @@ public class Diagram extends JFrame {
 	 */
 	public double getFormatedTime(double time) {
 		if (time < 1) {
-			return time = time * this.getClients().size() * 100;
+			return time = time * this.getClients().size() * 1000;
 		}
 		else if (time > 0 && time < 10) {
-			return time = time * this.getClients().size() * 10;
+			return time = time * this.getClients().size() * 100;
 		}
 		else if (time > 10 && time < 100) {
 			return time = time * this.getClients().size();

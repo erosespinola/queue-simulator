@@ -8,54 +8,52 @@ import random.Random;
  */
 public class Simulator {
 	private ArrayList<Client> clients;
-  private double idleTime = 0;
+	private double idleTime = 0;
 	private double nextEntryEvent = 0;
 	private double nextExitEvent = -1;
-  private int arrivals = 0;
+	private int arrivals = 0;
 	private Random random;
 	private double time = 0;
 	private double lambda;
 	private double miu;
 	private int id = 0;
-  private int listHead = 0;
-  private double simulationTime;
+	private int listHead = 0;
+	private double simulationTime;
 
 	public Simulator(double lambda, double miu, double seed, double simulationTime) {
 		this.clients = new ArrayList<Client>();
 		this.lambda = lambda;
 		this.miu = miu;
 		this.random = new Random(seed, 0, 5);
-    this.simulationTime = simulationTime;
+		this.simulationTime = simulationTime;
 	}
 
 	/**
 	 * Avanza la simulación hacia el siguiente evento
-   *
-   * @return boolean bandera que determina si la simulación avanza o no
-   *
+	 *
+	 * @return boolean bandera que determina si la simulación avanza o no
+	 *
 	 */
 	public boolean Advance() {
 
-    // set next time
-    if(nextExitEvent == -1) {
-      time = nextEntryEvent;
-    }
-    else {
-      time = nextExitEvent > nextEntryEvent ? nextEntryEvent : nextExitEvent;
-    }
+		// set next time
+		if(nextExitEvent == -1) {
+			time = nextEntryEvent;
+    	}
+    	else {
+    		time = nextExitEvent > nextEntryEvent ? nextEntryEvent : nextExitEvent;
+    	}
 
-    if(time > simulationTime) {
-      return false;
-    }
+    	if(time > simulationTime) {
+    		return false;
+    	}
 
-		// TODO: change printing from standard output to screen
-		// perhaps implement an event system
 		System.out.println("-- Tiempo: " + time + " --");
 
 		// if on next entry time, push a new client to the line
 		if(time == nextEntryEvent) {
 
-			Client newClient = new Client(time, this.random.next(this.lambda), this.random.next(this.miu), "Client " + (++id));
+			Client newClient = new Client(time, this.random.next(this.lambda), this.random.next(this.miu), "C" + (++id));
 			newClient.enter();
 
 			// if first in line, serve that client
@@ -65,14 +63,14 @@ public class Simulator {
 			}
 
 			clients.add(newClient);
-      nextEntryEvent = newClient.getNextEntry();
+			nextEntryEvent = newClient.getNextEntry();
 
-      // calculate waiting time of line entering client
-      if(!newClient.isBeingServed()) {
-        this.calculateWaitTime(clients.size() - 1);
-      }
+			// calculate waiting time of line entering client
+			if(!newClient.isBeingServed()) {
+				this.calculateWaitTime(clients.size() - 1);
+			}
 
-      this.arrivals++;
+			this.arrivals++;
 		}
 
 		// if on next exit time, drop the client from the line
@@ -81,20 +79,18 @@ public class Simulator {
 			tmpClient.exit();
 
 			// serve next client in line
-      if(listHead != clients.size()) {
-  			Client nextClient = clients.get(listHead);
-  			nextClient.serve();
-  			nextExitEvent = nextClient.getExitTime();
+			if(listHead != clients.size()) {
+				Client nextClient = clients.get(listHead);
+				nextClient.serve();
+				nextExitEvent = nextClient.getExitTime();
 			} else {
-        idleTime += nextEntryEvent - nextExitEvent;
+				idleTime += nextEntryEvent - nextExitEvent;
 				nextExitEvent = -1;
 			}
 		}
 
 		System.out.println("");
-
-    return true;
-
+		return true;
 	}
 
   /**
