@@ -30,6 +30,8 @@ public class GUI extends JFrame implements ActionListener {
 	
 	private JLabel lblW, lblWq, lblL, lblLq, lblO;
 	private JLabel lblCreadoPorEros;
+
+	Diagram diagram = null;
 	
 	/**
 	 * Constructor de la clase
@@ -94,8 +96,11 @@ public class GUI extends JFrame implements ActionListener {
 
 		        // Creación del diagrama de simulación
 				if (!simulator.getClients().isEmpty()  && time > 0) {
-					Diagram di = new Diagram(time, simulator.getClients());
-					di.repaint();
+					if(diagram != null) {
+						diagram.close();
+					}
+					diagram = new Diagram(time, simulator.getClients());
+					diagram.repaint();
 				}
 				
 				return;

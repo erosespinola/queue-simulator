@@ -23,6 +23,7 @@ public class Diagram extends JPanel {
 	private ArrayList<Client> clients;
 	private int lineSizeX;
 	private int xStart, yStart, lineDistance;
+	JFrame frmDiagramaDeCola;
 
 	/**
 	 * Función que inicializa los elementos del diagrama
@@ -42,24 +43,24 @@ public class Diagram extends JPanel {
 		this.setPreferredSize(new Dimension((int)(this.lineSizeX + 100), 400));
 		
 		//Confiuración del Frame que contiene el Panel donde se pinta el gráfico
-        JScrollPane scrollPane = new JScrollPane(this);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(0,0,797, 373);
-        
-        JPanel contentPane = new JPanel(null);
-        contentPane.setPreferredSize(new Dimension((int)this.lineSizeX, 400));
-        contentPane.add(scrollPane);
-        
-        JFrame frmDiagramaDeCola = new JFrame();
-        frmDiagramaDeCola.setTitle("Diagrama de cola");
-        frmDiagramaDeCola.setContentPane(contentPane);
-        frmDiagramaDeCola.pack();
-        frmDiagramaDeCola.setSize(800, 400);
-        frmDiagramaDeCola.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frmDiagramaDeCola.setVisible(true);	
-        frmDiagramaDeCola.setResizable(false);
-        
+		JScrollPane scrollPane = new JScrollPane(this);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(0,0,797, 373);
+		
+		JPanel contentPane = new JPanel(null);
+		contentPane.setPreferredSize(new Dimension((int)this.lineSizeX, 400));
+		contentPane.add(scrollPane);
+		
+		frmDiagramaDeCola = new JFrame();
+		frmDiagramaDeCola.setTitle("Diagrama de cola");
+		frmDiagramaDeCola.setContentPane(contentPane);
+		frmDiagramaDeCola.pack();
+		frmDiagramaDeCola.setSize(800, 400);
+		frmDiagramaDeCola.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmDiagramaDeCola.setVisible(true);	
+		frmDiagramaDeCola.setResizable(false);
+		
 	}
 	
 	/**
@@ -213,4 +214,13 @@ public class Diagram extends JPanel {
 
 		}
 	}
+
+	/**
+	 * Método que cierra la ventana
+	 */
+	public void close() {
+		this.frmDiagramaDeCola.setVisible(false);
+		this.frmDiagramaDeCola.dispose();
+	}
+
 }
