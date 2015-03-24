@@ -22,11 +22,11 @@ public class Client {
 	 * 			
 	 */
 	public Client(double arriveTime, double nextEntry, double serviceTime, String label) {
-	    this.arriveTime = arriveTime;
-	    this.nextEntry = arriveTime + nextEntry;
-	    this.serviceTime = serviceTime;
-	    this.exitTime = arriveTime + serviceTime;
-	    this.label = label;
+		this.arriveTime = arriveTime;
+		this.nextEntry = arriveTime + nextEntry;
+		this.serviceTime = serviceTime;
+		this.exitTime = arriveTime + serviceTime;
+		this.label = label;
 	}
 	
 	/**
@@ -109,15 +109,15 @@ public class Client {
 		return this.waitTime + this.serviceTime;
 	}
 
-  /**
-   * Determina el tiempo de espera y el tiempo de salida
-   *
-   * @param time Tiempo de espera
-   */
-  public void setWaitingTime(double time) {
-    this.waitTime = time;
-    this.exitTime = arriveTime + waitTime + serviceTime;
-  }
+	/**
+   	 * Determina el tiempo de espera y el tiempo de salida
+     *
+     * @param time Tiempo de espera
+     */
+	public void setWaitingTime(double time) {
+		this.waitTime = time;
+		this.exitTime = arriveTime + waitTime + serviceTime;
+	}
 	
 	/**
 	 * Imprime el tiempo de entrada al sistema del cliente
