@@ -12,16 +12,16 @@ public class Simulator {
 	private double nextEntryEvent = 0;
 	private double nextExitEvent = -1;
 	private int arrivals = 0;
-	private Random random;
+	private final Random random;
 	private double time = 0;
-	private double lambda;
+	private final double lambda;
 	private double miu;
 	private int id = 0;
 	private int listHead = 0;
-	private double simulationTime;
+	private final double simulationTime;
 
 	public Simulator(double lambda, double miu, double seed, double simulationTime) {
-		this.clients = new ArrayList < Client > ();
+		this.clients = new ArrayList <> ();
 		this.lambda = lambda;
 		this.miu = miu;
 		this.random = new Random(seed, 0, 5);
@@ -34,7 +34,7 @@ public class Simulator {
 	 * @return boolean bandera que determina si la simulación avanza o no
 	 *
 	 */
-	public boolean Advance() {
+	public boolean advance() {
 
 		// set next time
 		if (nextExitEvent == -1) {
@@ -189,10 +189,10 @@ public class Simulator {
 	 * Regresa la lista de clientes que han pasado por el sistema
 	 * incluyendo los que han salido y los que estan actualmente en el
 	 *
-	 * @return ArrayList<Client> clientes servidos
+	 * @return clientes servidos
 	 *
 	 */
-	public ArrayList < Client > getClients() {
+	public ArrayList <Client> getClients() {
 		return clients;
 	}
 
