@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
-import simulator.Simulator;
+import simulator.*;
 
 import javax.swing.SwingConstants;
 
@@ -59,9 +59,9 @@ public class GUI extends JFrame implements ActionListener {
             double lambda = 0, seed = 0, miu = 0, time = 0;
 
             // Validación de los campos
-            if (this.areFieldsNumeric(this.textFieldSeed, this.textFieldMiu, 
+            if (this.areFieldsNumeric(this.textFieldSeed, this.textFieldMiu,
                     this.textFieldLambda, this.textFieldMiu)) {
-                
+
                 seed = Double.parseDouble(this.textFieldSeed.getText());
                 lambda = Double.parseDouble(this.textFieldLambda.getText());
                 miu = Double.parseDouble(this.textFieldMiu.getText());
@@ -72,17 +72,18 @@ public class GUI extends JFrame implements ActionListener {
                     return;
                 }
 
-                Simulator simulator = new Simulator(lambda, miu, seed, time);
+                QueueSimulator simulator = new MM1QueueSimulator(15.2, 0.01, 0.01);
+                // QueueSimulator simulator = new MM1QueueSimulator(lambda, miu, seed);
 
                 // Avanza el simuladar en unidades de tiempo dadas
-                simulator.terminate();
+                simulator.runSimulation(10);
 
                 //Impresión de resultados en panel
-                this.lblL.setText("L = " + simulator.L());
-                this.lblLq.setText("Lq = " + simulator.Lq());
-                this.lblW.setText("W = " + simulator.W());
-                this.lblWq.setText("Wq = " + simulator.Wq());
-                this.lblO.setText("O = " + simulator.O());
+                this.lblL.setText("L = " + simulator.getMeanUnits());
+                this.lblLq.setText("Lq = " + simulator.getMeanLineUnits());
+                this.lblW.setText("W = " + simulator.geteMeanWaitingTime());
+                this.lblWq.setText("Wq = " + simulator.geteMeanLineWaitingTime());
+                this.lblO.setText("O = " + simulator.getIdleTime());
 
                 // Creación del diagrama de simulación
                 if (!simulator.getClients().isEmpty() && time > 0) {
@@ -208,11 +209,11 @@ public class GUI extends JFrame implements ActionListener {
         }
         return true;
     }
-    
-    private boolean isFieldNumeric(JTextField textField) {        
+
+    private boolean isFieldNumeric(JTextField textField) {
         return !textField.getText().isEmpty() && isNumeric(textField.getText());
     }
-    
+
     private boolean areFieldsNumeric(JTextField ...textFields) {
         for (JTextField textField : textFields) {
             if (!isFieldNumeric(textField)) {
