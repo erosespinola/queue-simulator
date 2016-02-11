@@ -59,15 +59,9 @@ public class GUI extends JFrame implements ActionListener {
             double lambda = 0, seed = 0, miu = 0, time = 0;
 
             // Validación de los campos
-            if (!this.textFieldSeed.getText().isEmpty()
-                    && isNumeric(this.textFieldSeed.getText())
-                    && !this.textFieldSeed.getText().isEmpty()
-                    && isNumeric(this.textFieldSeed.getText())
-                    && !this.textFieldSeed.getText().isEmpty()
-                    && isNumeric(this.textFieldSeed.getText())
-                    && !this.textFieldSeed.getText().isEmpty()
-                    && isNumeric(this.textFieldSeed.getText())) {
-
+            if (this.areFieldsNumeric(this.textFieldSeed, this.textFieldMiu, 
+                    this.textFieldLambda, this.textFieldMiu)) {
+                
                 seed = Double.parseDouble(this.textFieldSeed.getText());
                 lambda = Double.parseDouble(this.textFieldLambda.getText());
                 miu = Double.parseDouble(this.textFieldMiu.getText());
@@ -81,9 +75,7 @@ public class GUI extends JFrame implements ActionListener {
                 Simulator simulator = new Simulator(lambda, miu, seed, time);
 
                 // Avanza el simuladar en unidades de tiempo dadas
-                while (simulator.advance()) {
-                    //ignore
-                }
+                simulator.terminate();
 
                 //Impresión de resultados en panel
                 this.lblL.setText("L = " + simulator.L());
@@ -213,6 +205,19 @@ public class GUI extends JFrame implements ActionListener {
             Double.parseDouble(str);
         } catch (NumberFormatException e) {
             return false;
+        }
+        return true;
+    }
+    
+    private boolean isFieldNumeric(JTextField textField) {        
+        return !textField.getText().isEmpty() && isNumeric(textField.getText());
+    }
+    
+    private boolean areFieldsNumeric(JTextField ...textFields) {
+        for (JTextField textField : textFields) {
+            if (!isFieldNumeric(textField)) {
+                return false;
+            }
         }
         return true;
     }

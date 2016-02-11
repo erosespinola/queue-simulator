@@ -91,6 +91,12 @@ public class Simulator {
 		System.out.println("");
 		return true;
 	}
+        
+        public void terminate() {
+            while(this.advance()) {
+                // ignore
+            }
+        }
 
 	/**
 	 * Determina el tiempo de espera para un cliente
