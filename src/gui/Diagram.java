@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import simulator.Client;
+import simulator.QueueClient;
 
 /**
  * Clase de Diagrama
@@ -21,7 +21,7 @@ import simulator.Client;
 public class Diagram extends JPanel {
 
     private double time;
-    private ArrayList<Client> clients;
+    private ArrayList<QueueClient> clients;
     private int lineSizeX;
     private int xStart, yStart, lineDistance;
     JFrame frmDiagramaDeCola;
@@ -32,7 +32,7 @@ public class Diagram extends JPanel {
      * @param time Tiempo total de la simulaci�n
      * @param clients ArrayList de clientes para ser dibujados
      */
-    public Diagram(double time, ArrayList<Client> clients) {
+    public Diagram(double time, ArrayList<QueueClient> clients) {
         super();
         this.time = time;
         this.clients = clients;
@@ -87,7 +87,7 @@ public class Diagram extends JPanel {
      *
      * @return Regresa un ArrayList con los clientes a dibujar
      */
-    public ArrayList<Client> getClients() {
+    public ArrayList<QueueClient> getClients() {
         return clients;
     }
 
@@ -96,7 +96,7 @@ public class Diagram extends JPanel {
      *
      * @param clients Clientes a simular
      */
-    public void setClients(ArrayList<Client> clients) {
+    public void setClients(ArrayList<QueueClient> clients) {
         this.clients = clients;
     }
 
@@ -125,7 +125,7 @@ public class Diagram extends JPanel {
      * @param g Instancia de Graphics para dibujar
      * @param client Representa el cliente de donde obtener su información
      */
-    public void drawClientEntered(Graphics g, Client client) {
+    public void drawClientEntered(Graphics g, QueueClient client) {
         Graphics2D g2 = (Graphics2D) g;
         double x = (client.getArriveTime()) * (this.lineSizeX / this.time) + this.xStart;
         g2.drawString(client.getLabel(), (int) x, (int) this.yStart - 40);
@@ -141,7 +141,7 @@ public class Diagram extends JPanel {
      * @param g Instancia de Graphics para dibujar
      * @param client Representa el cliente de donde obtener su información
      */
-    public void drawClientEnteredService(Graphics g, Client client) {
+    public void drawClientEnteredService(Graphics g, QueueClient client) {
         Graphics2D g2 = (Graphics2D) g;
         double x = (client.getWaitTime() + client.getArriveTime()) * (this.lineSizeX / this.time) + this.xStart;
         double xIni = (client.getArriveTime()) * (this.lineSizeX / this.time) + this.xStart;
@@ -158,7 +158,7 @@ public class Diagram extends JPanel {
      * @param g Instancia de Graphics para dibujar
      * @param client Representa el cliente de donde obtener su información
      */
-    public void drawClientServed(Graphics g, Client client) {
+    public void drawClientServed(Graphics g, QueueClient client) {
         Graphics2D g2 = (Graphics2D) g;
         double x = (client.getExitTime()) * (this.lineSizeX / this.time) + this.xStart;
         g2.drawString(client.getLabel(), (int) x, (int) (this.yStart + this.lineDistance + 20));

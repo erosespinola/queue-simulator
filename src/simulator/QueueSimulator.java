@@ -6,7 +6,7 @@ public abstract class QueueSimulator {
 
 	// protected members
 	protected int arrivals = 0;
-	protected ArrayList<Client> clients;
+	protected ArrayList<QueueClient> clients;
 	protected double idleTime = 0;
 	protected double currentTime = 0;
 
@@ -31,7 +31,7 @@ public abstract class QueueSimulator {
 	 */
 	public double getMeanUnits() {
 		double waitingTime = 0;
-		for (Client client: clients) {
+		for(QueueClient client: clients) {
 			waitingTime += client.getSystemTime();
 		}
 		return waitingTime / this.currentTime;
@@ -42,7 +42,7 @@ public abstract class QueueSimulator {
 	 */
 	public double getMeanLineUnits() {
 		double waitingTime = 0;
-		for (Client client: clients) {
+		for (QueueClient client: clients) {
 			waitingTime += client.getWaitTime();
 		}
 		return waitingTime / this.currentTime;
@@ -53,7 +53,7 @@ public abstract class QueueSimulator {
 	 */
 	public double geteMeanWaitingTime() {
 		double waitingTime = 0;
-		for (Client client: clients) {
+		for (QueueClient client: clients) {
 			waitingTime += client.getSystemTime();
 		}
 		return waitingTime / this.arrivals;
@@ -65,7 +65,7 @@ public abstract class QueueSimulator {
 	 */
 	public double geteMeanLineWaitingTime() {
 		double waitingTime = 0;
-		for(Client client: clients) {
+		for(QueueClient client: clients) {
 			waitingTime += client.getWaitTime();
 		}
 		return waitingTime / this.arrivals;
@@ -89,7 +89,7 @@ public abstract class QueueSimulator {
 	 * Returns the client list involved in the system
 	 * @return clients that have passed and are in queue
 	 */
-	public ArrayList<Client> getClients() {
+	public ArrayList<QueueClient> getClients() {
 		return clients;
 	}
 
