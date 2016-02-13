@@ -23,6 +23,7 @@ public class LinearRandom extends Random {
 	/**
 	 * Return the next pseudorandom, int
 	 */
+        @Override
 	public double nextDouble() {
 		this.seed = (MULTIPLIER * this.seed) % MODULO;
 		return this.seed / MODULO;

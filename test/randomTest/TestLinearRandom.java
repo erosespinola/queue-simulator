@@ -1,11 +1,11 @@
-package random;
+package randomTest;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import random.LinearRandom;
 
 import java.util.ArrayList;
+import random.LinearRandom;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

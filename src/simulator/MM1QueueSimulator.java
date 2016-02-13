@@ -14,7 +14,7 @@ public class MM1QueueSimulator extends QueueSimulator {
 	private double nextEntryEvent = 0;
 	private double nextExitEvent = -1;
 	private final double arrivalMean;
-	private double servingMean;
+	private final double servingMean;
 	private int id = 0;
 	private int listHead = 0;
 
@@ -24,7 +24,7 @@ public class MM1QueueSimulator extends QueueSimulator {
 	public MM1QueueSimulator(double arrivalMean, double servingMean, double seed) {
 		this.arrivalMean = arrivalMean;
 		this.servingMean = servingMean;
-		this.clients = new ArrayList<QueueClient>();
+		this.clients = new ArrayList<>();
 		this.arrivalRandom = new ExponentialRandom(seed, arrivalMean);
 		this.servingRandom = new ExponentialRandom(seed, servingMean);
 	}
@@ -32,6 +32,7 @@ public class MM1QueueSimulator extends QueueSimulator {
 	/**
 	 * Advance simulator
 	 */
+        @Override
 	protected void advance() {
 
 		// set next time

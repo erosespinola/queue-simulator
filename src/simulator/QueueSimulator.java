@@ -51,7 +51,7 @@ public abstract class QueueSimulator {
 	/**
 	 * Calculate queue mean waiting time
 	 */
-	public double geteMeanWaitingTime() {
+	public double getMeanWaitingTime() {
 		double waitingTime = 0;
 		for (QueueClient client: clients) {
 			waitingTime += client.getSystemTime();
@@ -63,7 +63,7 @@ public abstract class QueueSimulator {
 	 * Calculate queue mean waiting time in line
 	 * @return double
 	 */
-	public double geteMeanLineWaitingTime() {
+	public double getMeanLineWaitingTime() {
 		double waitingTime = 0;
 		for(QueueClient client: clients) {
 			waitingTime += client.getWaitTime();

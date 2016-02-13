@@ -5,8 +5,8 @@ package random;
  */
 public class ExponentialRandom extends Random {
 
-	private double mean;
-	private Random generator;
+	private final double mean;
+	private final Random generator;
 
 	/**
 	 * LinearRandom
@@ -21,6 +21,7 @@ public class ExponentialRandom extends Random {
 	 * Return the next pseudorandom, double from an exponential distribution
 	 * @param mean the mean of the distrubtion to use
 	 */
+        @Override
 	public double nextDouble() {
 		return -(Math.log(1 - this.generator.nextDouble()) / this.mean);
 	}

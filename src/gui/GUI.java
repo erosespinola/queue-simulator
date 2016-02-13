@@ -72,17 +72,16 @@ public class GUI extends JFrame implements ActionListener {
                     return;
                 }
 
-                QueueSimulator simulator = new MM1QueueSimulator(15.2, 0.01, 0.01);
-                // QueueSimulator simulator = new MM1QueueSimulator(lambda, miu, seed);
+                QueueSimulator simulator = new MM1QueueSimulator(lambda, miu, seed);
 
                 // Avanza el simuladar en unidades de tiempo dadas
-                simulator.runSimulation(10);
+                simulator.runSimulation(time);
 
                 //Impresión de resultados en panel
                 this.lblL.setText("L = " + simulator.getMeanUnits());
                 this.lblLq.setText("Lq = " + simulator.getMeanLineUnits());
-                this.lblW.setText("W = " + simulator.geteMeanWaitingTime());
-                this.lblWq.setText("Wq = " + simulator.geteMeanLineWaitingTime());
+                this.lblW.setText("W = " + simulator.getMeanWaitingTime());
+                this.lblWq.setText("Wq = " + simulator.getMeanLineWaitingTime());
                 this.lblO.setText("O = " + simulator.getIdleTime());
 
                 // Creación del diagrama de simulación

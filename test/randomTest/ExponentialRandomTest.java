@@ -1,9 +1,11 @@
-package random;
-
+package randomTest;
 import org.junit.Before;
 import org.junit.Test;
 
+import random.ExponentialRandom;
+
 import java.util.ArrayList;
+import random.ExponentialRandom;
 
 import static org.junit.Assert.*;
 
@@ -33,7 +35,7 @@ public class ExponentialRandomTest {
 	@Test
 	public void testNextDouble()  {
 		int casesLength = KNOWN_CASES.size();
-		ArrayList<Double> results = new ArrayList<Double>();
+		ArrayList<Double> results = new ArrayList<>();
 		while(casesLength-- > 0) {
 			results.add(random.nextDouble());
 		}
